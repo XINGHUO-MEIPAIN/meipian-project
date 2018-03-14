@@ -1,0 +1,99 @@
+
+  	<div class="page-group">
+     	<div class="page page-current" id='active1'>
+        	<div class="editor">
+          	 	<div class="back">
+          	 	   <a class="back">返回</a>
+          	 	 </div>
+          	 	<div class="editor_text">编辑</div>
+              	<div class="complete" onclick="activeComplete()">完成</div>
+            </div>
+            
+         	<div class="cover_content">
+		        <div class="editor_face">
+		            <div class="my_img"></div>
+		            <div class="title_text"><a href="./title.html">点击设置标题</a></div>
+		            <div class="editor_page"><a href="./cover.html">编辑封面</a></div>
+		        </div>
+	            <div class="add_content">
+	           	   <div class="add_1">
+	              	   <p class="add" onclick="addNew(this)">+</p>
+	                   <div class="add_type clearfix">
+	                      <div class="add_type_div"><a href="./add_new_item.html">文字</a></div>
+	                      <div class="add_type_div add_type_img" onclick="openPhotoAlbum()">图片</div>
+	                   </div>
+	              </div>
+	              <div class="activeContent"></div>
+	         </div>
+          </div>
+          <div class="loadding">加载中</div>
+      </div>
+      <script type="text/javascript">
+      	  //获取本地图片的地址
+		function uploadFileResult(objs){
+		    if(objs==null||typeof(objs)=="undefined"||objs.length==0){
+
+		    }else{ 	   
+		       $(".imgContent").hide();
+		       localImage = "data:image/jpeg;base64,"+objs[0].fileBase64;
+		       $(".activeContent").html(textModel);   
+		       $(".textImage img").attr("src",localImage);
+		       $(".textImage img").attr("data",objs[0].contentPath);
+		       sessionStorage.setItem("fileImage",localImage);
+		       sessionStorage.setItem("textImagecontentPath",objs[0].contentPath);
+		       if(sessionStorage.getItem("newItemText")){
+		       	   var newItemText = sessionStorage.getItem("newItemText");
+		           $(".writeContent").html(newItemText);
+		       };
+		    };
+		};
+        
+        //替换封面图片 http
+        function titleArr(res){	
+           $(".my_img img").attr("src",res);    
+        };
+        
+        //替换文章的图片地址 http
+        function textArr(res){ 
+            $(".textImage img").attr("src",res);
+        }
+      </script>
+    </div>
+      <!-- <script type="text/javascript">
+        
+     //打开相册
+        var pickTag = "pick_tag"; 
+       
+     	function openPhotoAlbum(this){
+     	    Cordova.exec(null,null, "Interactive", "openCameraOrPick", [pickTag]);	 
+        };
+        //原生调js，选择相册后的图片路径
+		function getPickImg(res){
+		   for(var j = 0 ; len = res.length,j < len ; j++){
+		   	 var html = '';
+		   	  html += '<div class="add_content_2">'+
+	           '<div class="add_content_1 clearfix">'+
+	               '<div class="add_content_1_left">×</div>' +
+	               '<div class="add_content_1_img">'+
+	                  '<img src="'+res[j].pick_imgs_path+'">'+
+	               '</div>'+
+	               '<a href="/new/editor_text.html">'+
+	                  '<div class="add_content_1_text">点击添加文字</div>'+
+	               '</a>'+
+	           '</div>'+
+	           '<div class="add_1">'+
+	              '<p class="add">+</p>'+
+	              '<div class="add_type clearfix">'+
+	                 '<div class="add_type_div"><a href="/new/add_new_item.html">文字</a></div>'+
+	                 '<div class="add_type_div" onclick="openPhotoAlbum()">图片</div>'+
+	              '</div>'+
+	            '</div>'+
+              '</div>';
+             //var imgIndex = localStorage.getItem('i', i);
+            
+	         $(".add_content").append(html);
+		   }
+		};
+
+     </script>
+ -->

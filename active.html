@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+	<link rel="stylesheet" href="./css/index.css">
+	<link rel="stylesheet" href="./css/sm.min.css">
+	<script type='text/javascript' src='./js/zepto.min.js' charset='utf-8'></script>
+	<script type="text/javascript">
+		$.config = {
+		    autoInit: true
+		  }
+	</script>
+	<!-- <script type="text/javascript" src="./js/cordova.js"></script> -->
+	<script type='text/javascript' src='./js/sm.min.js' charset='utf-8'></script>
+    <script type="text/javascript" src="./js/total.js"></script>
+	<title></title>
+</head>
+<body>
+  	<div class="page-group">
+     	<div class="page page-current" id="index" style="background: white"> 
+     	  <div class="top_content">
+	     	   <div class="active_back">
+                <span class="appName">美篇</span>
+	              <a href="./index.html">发布</a>
+	     	   </div>
+           <div class="ul_content_1">
+    	     	   <div class="ul_content clearfix">
+    	              <div class="ul_content_div active">热点</div>
+    	              <div class="ul_content_div">关注</div>
+    	              <div class="ul_content_div">身边</div>
+    	              <div class="ul_content_div">摄影</div>
+    	              <div class="ul_content_div">美文</div>
+                    <div class="ul_content_div">旅行</div>
+    	     	   </div>
+            </div>
+	     	</div>
+
+            <div class="ul_content_active">
+               <div class="movieDetail content infinite-scroll infinite-scroll-bottom">
+                  <ul class="movieDetailUl">
+                    
+                  </ul>
+                  
+                  <div class="infinite-scroll-preloader">
+                      <div class="preloader"></div>
+                  </div>
+                  <div id="bottomText">
+                    
+                  </div>
+             </div>  
+            </div>
+     	</div>
+      </div>
+      
+     </body>
+     <script type="text/javascript" src="./js/index/index.js"></script>
+     <script type="text/javascript">
+        //主页初始化
+        $(document).on("pageInit", function(e, pageId, $page) {
+          if(pageId == "index"){
+             getIndex();
+          }
+        });
+      </script>
+  </html>

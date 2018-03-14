@@ -1,0 +1,47 @@
+#specialContent {
+  width: 100%;
+}
+
+#specialContent .topicList {
+  width: 100%;
+  padding: 10px 15px;
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+}
+
+#specialContent .topicList .picture {
+  flex: 1.2;
+}
+
+#specialContent .topicList .picture img {
+  width: 115px;
+  height: 80px;
+  display: block;
+}
+
+#specialContent .topicList .text {
+  flex: 2;
+}
+
+.topicList .text h4 {
+  font-size: 14px;
+}
+
+.topicList .text .textContent {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+}
+
+.topicList .text .history {
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.topicList .text .history .titleNum {
+  margin-right: 10px;
+}

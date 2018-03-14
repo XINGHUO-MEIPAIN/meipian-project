@@ -1,0 +1,33 @@
+
+ul{
+  width: 100%;
+}
+.hobyLeft{
+  width: 70px;
+  background-color: #fff;
+}
+.hobyLeft li{
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-right: 2px solid #fff;
+  color: #9c9c9c;
+  font-size: 15px;
+  transition: all 0.5s;
+}
+.hobyRight{
+  padding: 10px;
+  background-color: #f0f3f5;
+}
+.hobyRight li a{
+  display: block;
+}
+.hobyRight li img{
+  width: 100%;
+  height: 100px;
+}
+.hoby_active{
+  border-left: 4px solid #2e92fd;
+  background-color: #f0f3f5;
+  color: #333 !important;
+}
