@@ -512,13 +512,10 @@ $(".company_main_cover").on("tap",".ul_content_active_content",function(){
   tab1Click(openUpAndDown);
 }
 
-
-
-
-
-
-
-
+//新增的方法测试
+function initTime(){
+  
+}
 
 //点击保存
 var val;
