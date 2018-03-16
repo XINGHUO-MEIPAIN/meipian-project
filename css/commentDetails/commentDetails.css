@@ -5,7 +5,9 @@
 }
 
 #commentDetails #noMore {
+  font-size: 14px;
   text-align: center;
+  display: none;
 }
 
 #commentDetails .commentList {
@@ -39,6 +41,9 @@
   -webkit-box-orient: vertical;
   display: -webkit-box;
   -webkit-line-clamp: 5;
+}
+.infoContentText img{
+  width: 20px;
 }
 #commentDetails .commentList .infoName .userName {
   font-size: 10px;
@@ -117,4 +122,17 @@
   -webkit-box-orient: vertical;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+}
+.topBackComent{
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  right: 20px;
+  bottom: 10%;
+  display: none;
+}
+.topBackComent img{
+  width: 36px;
+  height: 35px;
+  border-radius: 50%;
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
@@ -46,13 +47,13 @@
           <div class="tabShow">
             <ul class="buttons-tab " id='indexTab'>
               <li>
-                <a href="#tab1"  id="tabflag1" class="tab-link active button">热点</a>
+                <a href="#tab1" id="tabflag1" class="tab-link active button">热点</a>
               </li>
               <li>
-                <a href="#tab2"  id="tabflag2" class="tab-link button">关注</a>
+                <a href="#tab2" id="tabflag2" class="tab-link button">关注</a>
               </li>
               <li>
-                <a href="#tab3"  id="tabflag3" class="tab-link button">我的</a>
+                <a href="#tab3" id="tabflag3" class="tab-link button">我的</a>
               </li>
             </ul>
           </div>
@@ -67,7 +68,6 @@
                     <div class="preloader"></div>
                     <div class="pull-to-refresh-arrow"></div>
                   </div>
-                  <!-- 专题 -->
                   <ul class="company_main_cover" id="cardContent">
                     <!-- 模板渲染 -->
                   </ul>
@@ -81,64 +81,70 @@
               </div>
             </div>
             <div id="tab2" class="tab">
-              <div class="contentBlock">
-                <div class="inform">
-                  <span>
-                    <img src="./images/touxiang.jpg" alt=""> 关注别人,第一时间得到他们的专栏更新
-                  </span>
+              <div class="content-block pull-to-refresh-content" data-ptr-distance="55" style="margin: 0;padding: 0" id="tab2Content">
+                <div class="pull-to-refresh-layer" style="position: absolute;top: -34px;">
+                    <div class="preloader"></div>
+                    <div class="pull-to-refresh-arrow"></div>
                 </div>
-                <!-- 关注人员列表 -->
-                <div class="personnelList">
-                  <div class="personnel">
-                    <div class="headPortrait">
-                      <img src="./images/5.jpg" alt="">
+                <div class="contentBlock">
+                    <div class="inform">
+                      <span>
+                        <img src="./images/touxiang.jpg" alt=""> 关注别人,第一时间得到他们的专栏更新
+                      </span>
                     </div>
-                    <div class="personnelInfo">
-                      <div class="personnelName">
-                        冬天无雪
+                    <!-- <div class="personnelList">
+                      <div class="personnel">
+                        <div class="headPortrait">
+                          <img src="./images/5.jpg" alt="">
+                        </div>
+                        <div class="personnelInfo">
+                          <div class="personnelName">
+                            冬天无雪
+                          </div>
+                          <div class="profession">
+                            美篇摄影学
+                          </div>
+                        </div>
+                        <div class="attentionBtn">
+                          <a href="#">关注</a>
+                        </div>
                       </div>
-                      <div class="profession">
-                        美篇摄影学
+                      <div class="personnel">
+                        <div class="headPortrait">
+                          <img src="./images/5.jpg" alt="">
+                        </div>
+                        <div class="personnelInfo">
+                          <div class="personnelName">
+                            冬天无雪
+                          </div>
+                          <div class="profession">
+                            美篇摄影学
+                          </div>
+                        </div>
+                        <div class="attentionBtn">
+                          <a href="#">关注</a>
+                        </div>
                       </div>
-                    </div>
-                    <div class="attentionBtn">
-                      <a href="#">关注</a>
-                    </div>
+                      <div class="personnel">
+                        <div class="headPortrait">
+                          <img src="./images/5.jpg" alt="">
+                        </div>
+                        <div class="personnelInfo">
+                          <div class="personnelName">
+                            冬天无雪
+                          </div>
+                          <div class="profession">
+                            美篇摄影学
+                          </div>
+                        </div>
+                        <div class="attentionBtn">
+                          <a href="#">关注</a>
+                        </div>
+                      </div>
+                    </div> -->
                   </div>
-                  <div class="personnel">
-                    <div class="headPortrait">
-                      <img src="./images/5.jpg" alt="">
-                    </div>
-                    <div class="personnelInfo">
-                      <div class="personnelName">
-                        冬天无雪
-                      </div>
-                      <div class="profession">
-                        美篇摄影学
-                      </div>
-                    </div>
-                    <div class="attentionBtn">
-                      <a href="#">关注</a>
-                    </div>
-                  </div>
-                  <div class="personnel">
-                    <div class="headPortrait">
-                      <img src="./images/5.jpg" alt="">
-                    </div>
-                    <div class="personnelInfo">
-                      <div class="personnelName">
-                        冬天无雪
-                      </div>
-                      <div class="profession">
-                        美篇摄影学
-                      </div>
-                    </div>
-                    <div class="attentionBtn">
-                      <a href="#">关注</a>
-                    </div>
-                  </div>
-                </div>
               </div>
+          
             </div>
             <div id="tab3" class="tab">
               <div class="tab3contentBlock" id="myPageInfo">
@@ -223,6 +229,7 @@
   <script src="./js/details/details.js"></script>
   <script src="./js/myPage/myPage.js"></script>
   <script src="./js/active1/active1.js"></script>
+  <script src="./js/face.js"></script>
   <script type="text/javascript">
     $.init();
     var params = 0;
@@ -247,11 +254,11 @@
       } else if (pageId == "commentDetails") {
         pageCommentDetails();
       } else if (pageId == "allComments") {
-        pageAllComments() ;
-      }else if (pageId == "active1") {
+        pageAllComments();
+      } else if (pageId == "active1") {
         active1();
-      }else if (pageId == "cover") {
-         // alert()
+      } else if (pageId == "cover") {
+        // alert()
       }
     });
   </script>

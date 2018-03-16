@@ -139,12 +139,13 @@ em{
 	color: #8a8a8a;
 }
 .active_title{
-	margin:0 0.5rem;
+	margin:0.5rem 0.5rem;
 	font-size: 0.8rem;
     color: black;
 }
 .ul_content_active_content>p{
-    margin:0.5rem;
+		margin:0.5rem;
+		width: 30%;
 }
 .active_article{
 	margin:0.5rem;

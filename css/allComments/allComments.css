@@ -9,6 +9,8 @@
 
 #allComments #noMore {
   text-align: center;
+  display: none;
+  font-size: 14px;
 }
 
 #allComments .replyList{

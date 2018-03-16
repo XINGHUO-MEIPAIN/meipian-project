@@ -5,50 +5,56 @@ function pageAllComments() {
   var addMoreAjAX = false;
   //初始化参数
   var paramaAjaxdC = {};
-  paramaAjaxdC.backwords = true;
-  paramaAjaxdC.lastId = 0;
-  paramaAjaxdC.lastUpdateTime = 0;
-  paramaAjaxdC.imId = 'lzy';
-  paramaAjaxdC.pageNum = 10;
-  //$('#uiContentListAll').html("");
-  $('#commentMain').html("");
-  $('#replyContent').html("");
-  $('#noMore').hide();
+  // paramaAjaxdC.backwords = true;
+  // paramaAjaxdC.lastId = 0;
+  // paramaAjaxdC.lastUpdateTime = 0;
+  // paramaAjaxdC.imId = 'lzy';
+  // paramaAjaxdC.pageNum = 10;
+  paramaAjaxdC.msgId = currentMsgId +"";
+  paramaAjaxdC.imId = selfImId;
+  currentPostUrl = "/getBlogInfo";
   initDownReshAll();
   initLoadMoreAll();
   //进入自动触发一次
   $.pullToRefreshTrigger("#allCommentContent");
+  
   //下拉刷新
   function initDownReshAll() {
-    $(document).on("refresh", "#allCommentContent", function (e) {
-      // 模拟1s的加载过程
-      function callBackFunc() {
-        $.pullToRefreshDone("#allCommentContent");
-        $.attachInfiniteScroll($('#allCommentContent'));
-      }
-      addMoreAjAX = false;
-      paramaAjaxdC.lastId = 0;
-      paramaAjaxdC.lastUpdateTime = 0;
-      renderC(callBackFunc);
-    });
+    if (documentFlag3 == true) {
+      $(document).on("refresh", "#allCommentContent", function (e) {
+        // 模拟1s的加载过程
+        function callBackFunc() {
+          $.pullToRefreshDone("#allCommentContent");
+          $.attachInfiniteScroll($('#allCommentContent'));
+        }
+        addMoreAjAX = false;
+        paramaAjaxdC.lastId = 0;
+        paramaAjaxdC.lastUpdateTime = 0;
+        renderC(callBackFunc);
+      });
+      documentFlag3 = false;
+    }
   }
 
   function initLoadMoreAll() {
-    $(document).on("infinite", "#allCommentContent", function () {
-      // 如果正在加载，则退出
-      if (loadMore == true) {
-        return;
-      }
-      if (addMoreAjAX) {
-        return;
-      }
-      loadMore = true;
-
-      function loadMoreCallBack() {
-        loadMore = false;
-      }
-      loadMoreAjaxC(loadMoreCallBack);
-    });
+    if(documentFlag4 == true){
+      $(document).on("infinite", "#allCommentContent", function () {
+        // 如果正在加载，则退出
+        if (loadMore == true) {
+          return;
+        }
+        if (addMoreAjAX) {
+          return;
+        }
+        loadMore = true;
+  
+        function loadMoreCallBack() {
+          loadMore = false;
+        }
+        loadMoreAjaxC(loadMoreCallBack);
+      });
+      documentFlag4 = false;
+    }
   }
   //加载更多
   function loadMoreAjaxC(callBackFunc) {
@@ -56,7 +62,7 @@ function pageAllComments() {
     $('#noMore').hide();
     $('.infinite-scroll-preloader').show();
     $.ajax({
-      url: postUrl + "/getDeptMsgList",
+      url: postUrl + currentPostUrl,
       type: "post",
       dataType: "json",
       data: JSON.stringify(paramaAjaxdC),
@@ -90,12 +96,14 @@ function pageAllComments() {
     $('#commentMain').html('');
     $('#replyContent').html('');
     $('.infinite-scroll-preloader').hide();
-    paramaAjaxdC.lastId = 0;
-    paramaAjaxdC.lastUpdateTime = 0;
+    $('#noMore').hide();
+    // paramaAjaxdC.lastId = 0;
+    // paramaAjaxdC.lastUpdateTime = 0;
+    paramaAjaxdC.msgId = currentMsgId +"";
     //开启加载指示器
     $.showIndicator();
     $.ajax({
-      url: postUrl + "/getDeptMsgList",
+      url: postUrl + currentPostUrl,
       type: "post",
       dataType: "json",
       data: JSON.stringify(paramaAjaxdC),
@@ -110,6 +118,7 @@ function pageAllComments() {
           if (res.data.length < 10) {
             addMoreAjAX = true;
             $('.infinite-scroll-preloader').hide();
+            $('#noMore').show();
           }
           paramaAjaxdC.lastId = res.data[res.data.length - 1].msgId;
           paramaAjaxdC.lastUpdateTime = res.data[res.data.length - 1].updateTime;
@@ -118,15 +127,15 @@ function pageAllComments() {
         } else {
           $("#uiContentList").append("<p>暂时没有消息</p>");
         }
-        $('#noMore').show();
       }
     });
   }
 
   //处理数据到UI
-  function dataHandlerListAll(data){
+  function dataHandlerListAll(data) {
     uiItemListAll(data)
   }
+
   function dataHandlerAll(data) {
     for (var i = 0; i < data.length; i++) {
       //模板渲染
@@ -134,7 +143,8 @@ function pageAllComments() {
     }
   }
   //ui模板
-  function uiItemListAll(data, i) {
+  function uiItemListAll(data) {
+    var msg = JSON.parse(data[0].blog.msgContent).text.msg;
     var node = '<div class="commentList">';
     node += ' <div class="infoImage">';
     node += '   <img src="./images/timg.jpg" alt="">';
@@ -147,7 +157,7 @@ function pageAllComments() {
     node += '     </span>';
     node += '   </div>';
     node += '   <div class="infoContentText">';
-    node += '     人生如减法,生活要简单.人生如减法,生活要简单. 人生如减法,生活要简单.人生如减法,生活要简单. 人生如减法,生活要简单.';
+    node += '    '+ Face().get(msg) +'';
     node += '   </div>';
     node += '   <div class="infoTime">';
     node += '     7分钟前';
@@ -157,22 +167,22 @@ function pageAllComments() {
     $("#commentMain").append(node);
   }
 
-  function uiItemContentAll(data,i){
-     var node = '<div class="replyList">'
-         node += '<div class="infoImage">';
-         node += '  <img src="./images/22.jpg" alt="">';
-         node += '</div>';
-         node += '<div class="infoContent">';
-         node += '  <div class="infoNameReply">';
-         node += '    <span class="userName">冰心</span>';
-         node += '  </div>';
-         node += '  <div class="replyText">';
-         node += '    主要是赶巧,本人写幽默段子写多了,在这点评换换口味,承蒙各位美友抬举,谢谢.';
-         node += '  </div>';
-         node += '  <div class="infoTime">7分钟前</div>';
-         node += ' </div>';
-         node += ' </div>';
-         $("#replyContent").append(node)
+  function uiItemContentAll(data, i) {
+    var node = '<div class="replyList">'
+    node += '<div class="infoImage">';
+    node += '  <img src="./images/22.jpg" alt="">';
+    node += '</div>';
+    node += '<div class="infoContent">';
+    node += '  <div class="infoNameReply">';
+    node += '    <span class="userName">冰心</span>';
+    node += '  </div>';
+    node += '  <div class="replyText">';
+    node += '    主要是赶巧,本人写幽默段子写多了,在这点评换换口味,承蒙各位美友抬举,谢谢.';
+    node += '  </div>';
+    node += '  <div class="infoTime">7分钟前</div>';
+    node += ' </div>';
+    node += ' </div>';
+    $("#replyContent").append(node)
   }
 
   function uiContentAll(data) {
@@ -204,55 +214,41 @@ function pageAllComments() {
 
   //点赞
   $('#commentMain').on('click', '.praiseImg', function (e) {
+    //阻止默认行为
+    e.stopImmediatePropagation()
     var $thumbsUp = $(this).siblings();
-    $thumbsUp.addClass('thumb_active');
-    var goodCount = $thumbsUp.html();
-    goodCount++;
-    $thumbsUp.html(goodCount);
-    var pramAjax = {};
-    pramAjax.blogAuthorImid = "100001";
-    pramAjax.blogMsgid = "140922775048028160";
-    pramAjax.imId = "100003";
-    //备注:此处有bug
-    $.ajax({
-      url: postUrl + "/thumbsUp",
-      type: 'post',
-      dataType: 'json',
-      data: JSON.stringify(pramAjax),
-      contentType: "application/json;charset=utf-8",
-      success: function (res) {
-        console.log(res);
-      }
-    });
+    if($thumbsUp.hasClass('thumb_active')==false){
+      $(this).attr("src", "./images/good2.png")
+      $thumbsUp.addClass('thumb_active');
+      var goodCount = $thumbsUp.html();
+      goodCount++;
+      $thumbsUp.html(goodCount);
+      var pramAjax = {};
+      pramAjax.blogAuthorImid = "100001";
+      pramAjax.blogMsgid = "140922775048028160";
+      pramAjax.imId = "100003";
+      //备注:此处有bug,
+      $.ajax({
+        url: postUrl + "/thumbsUp",
+        type: 'post',
+        dataType: 'json',
+        data: JSON.stringify(pramAjax),
+        contentType: "application/json;charset=utf-8",
+        success: function (res) {
+          console.log(res);
+        }
+      });
+    }else{
+      $thumbsUp.removeClass('thumb_active');
+      $(this).attr("src", "./images/pic1.png");
+      var goodCount = $thumbsUp.html();
+      goodCount--;
+      $thumbsUp.html(goodCount);
+    }
   });
-  //取消点赞
-  // $('#uiContentList').on('click', '.praiseImg', function (e) {
-  //   var $thumbsUp = $(this).siblings();
-  //   $thumbsUp.removeClass('thumb_active');
-  //   var goodCount = $thumbsUp.html();
-  //   goodCount--;
-  //   $thumbsUp.html(goodCount);
-  //   var pramRemmoveAjax = {};
-  //   pramRemmoveAjax.msgId = "141156522875944960";
-  //   pramRemmoveAjax.blogMsgid = "140922775048028160";
-  //   pramRemmoveAjax.imId = "100003";
-  //   $.ajax({
-  //     url: postUrl + "/cancelThumbsUp",
-  //     type: 'post',
-  //     dataType: 'json',
-  //     data: JSON.stringify(pramAjax),
-  //     contentType: "application/json;charset=utf-8",
-  //     success: function (res) {
-  //       console.log(res);
-  //     }
-  //   });
-  // });
 
   //回复
-  $('#uiContentListAll').on('click','.replyText',function(){
-    // $('#commentTextAll').focus(function(){
-    //   $('#commentTextAll').val('回复冰心:')
-    // })
+  $('#uiContentListAll').on('click', '.replyText', function () {
     $('#commentTextAll').val('回复冰心:').focus();
     $('#commentTextAll').addClass('input_active');
   })
@@ -284,7 +280,6 @@ function pageAllComments() {
         data: JSON.stringify(pramAjaxSend),
         contentType: "application/json;charset=utf-8",
         success: function (res) {
-          console.log(res);
           if (res.code == 200) {
             uiContentAll(res.data);
             $.toast("评论成功");
@@ -295,17 +290,19 @@ function pageAllComments() {
       });
   });
 
-  //点击评论跳转到评论详情
-  $('#uiContentList').on('click', '.infoContentText', function () {
-    $.router.load('./allComments.html');
-  })
   //点击跳转至个人主页
-  $('#uiContentList').on('click', '.infoNameReply', function () {
+  $('#uiContentListAll').on('click', '.userName', function (e) {
+    e.stopImmediatePropagation();
     $.router.load('./myPage.html');
   });
-  $('#uiContentList').on('click', '.infoImage', function () {
+  $('#uiContentListAll').on('click', '.infoImage', function (e) {
+    e.stopImmediatePropagation();
     $.router.load('./myPage.html');
   });
+
+  // $('#goBack2').click(function(){
+  //   $('.content').scrollTop(0);
+  // })
 
   //时间戳封装
   function getDateDiff(dateTimeStamp) {

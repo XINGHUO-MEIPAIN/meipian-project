@@ -83,6 +83,11 @@
 #tab2 .personnel .headPortrait{
   width: 40px;
   height: 40px;
+  border-radius: 40px;
+  color: #fff;
+  background: #5778a4;
+  text-align: center;
+  line-height: 40px;
 }
 #tab2 .personnel .headPortrait img{
   width: 40px;
@@ -513,4 +518,8 @@
   border:0.5rem solid white;
   width: 240px;
   height: 120px
+}
+
+.buttons-tab .button.active {
+  border-bottom: 4px solid #0894ec;
 }

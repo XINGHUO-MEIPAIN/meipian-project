@@ -4,6 +4,10 @@ function details(){
     });
     $('#watchAll').click(function(){
       $.router.load('./commentDetails.html');
+    });
+    $('.guanzhu').click(function(){
+      $(this).remove();
+      $.toast('¹Ø×¢³É¹¦');
     })
 }
 

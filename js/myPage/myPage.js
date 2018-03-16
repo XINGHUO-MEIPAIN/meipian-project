@@ -3,7 +3,7 @@ function myPageInfo() {
   var postUrl = "http://172.29.3.43:8082/blogService/im";
   //var postUrl = "http://20.95.15.171:8083/mpService/im";
     var pramAjaxInfo = {};
-    pramAjaxInfo.targetImId = "txz",
+    pramAjaxInfo.targetImId = 'txz',
     pramAjaxInfo.imId = "wzw",
     $.ajax({
       url: postUrl + "/getUserInfo",
@@ -15,7 +15,7 @@ function myPageInfo() {
         if (res.code == 200) {
             $('#userName').html(res.data.user.userName);
         }
-      }
+      } 
     });
   $('.content').scroll(function () {
     var scrollHeight = $('.content').scrollTop();

@@ -1,66 +1,67 @@
+//避免重复绑定document
+var documentFlag = true;
+var documentFlag2 = true;
+var documentFlag3 = true;
+var documentFlag4 = true;
+var documentTab2Flag = true;
+var selfImId = '442000198204228833';
+var pageIndex = GetQueryString("page");
+var pageMainMsg = GetQueryString("msgId");
+//当前点击头像的imid
+var clickHeadImid;
+//存放后退的相关参数
+var jumpPageArr = [];
+//判断是否停止加载
+var isOverLoad = false;
+//开发环境
+//var postUrl = "http://20.95.15.171:8082/blogService/im";
+//var postUrl = "http://172.29.3.43:8082/blogService/im";
+var postUrl = "http://20.95.15.171:8083/mpService/im";
+var contactServecesUrl = "http://20.95.15.171:8082/contactservice";
+//拉取美篇的参数
+var parmaData = {};
+var currentPageNum = 1;
+parmaData.backwords = true;
+parmaData.lastBlogMsgid = 0;
+parmaData.lastUpdateTime = "0";
+parmaData.blogNum = 10;
+parmaData.imId = selfImId;
+//触摸是否开始
+var isStop = false;
+//保存是在那个tab页跳转到其他页面，回到主页时恢复那个页面
+var whichTab = 0;
+//是否从主页调回来不刷新
+var isResultPage = true;
+//是否在需要滑动的开关，
+var isNeedScroll = true;
+//提示的开关
+var messPromptFlag = 0;
+var tabflag = 1;
+var isOpenBorside = 0;
+//当前点击tab的id
+var currentClickId = "tabflag1";
+//获取带过来的参数
+function GetQueryString(name) {
+  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+  var r = window.location.search.substr(1).match(reg);
+  if (r != null) return unescape(r[2]);
+  return null;
+}
+
 function pageIndeLoad(data) {
-  var selfImId = '442000198204228833';
-  var pageIndex = GetQueryString("page");
-  var pageMainMsg = GetQueryString("msgId");
-  //当前点击头像的imid
-  var clickHeadImid;
-  //存放后退的相关参数
-  var jumpPageArr = [];
-  //判断是否停止加载
-  var isOverLoad = false;
-  //var postUrl = "http://20.95.15.171:8082/blogService/im";
- // var postUrl = "http://172.29.3.43:8082/blogService/im";
- var postUrl = "http://20.95.15.171:8083/mpService/im";
-  //拉取美篇的参数
-  var parmaData = {};
-  var currentPageNum = 1;
-  parmaData.backwords = true;
-  parmaData.lastBlogMsgid = 0;
-  parmaData.lastUpdateTime = "0";
-  parmaData.blogNum = 10;
-  parmaData.imId = selfImId;
-  //当前请求postURL
-  // var currentPostUrl = "/getBlog";
-  //触摸是否开始
-  var isStop = false;
-  //保存是在那个tab页跳转到其他页面，回到主页时恢复那个页面
-  var whichTab = 0;
-  //是否从主页调回来不刷新
-  var isResultPage = true;
-  //是否在需要滑动的开关，
-  var isNeedScroll = true;
-  //提示的开关
-  var messPromptFlag = 0;
-  var tabflag = 1;
-  var isOpenBorside = 0;
-  //当前点击tab的id
-  var currentClickId = "tabflag1"
-  //获取带过来的参数
-  function GetQueryString(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]);
-    return null;
-  }
   //开启上拉刷新  下拉加载更多
   function openUpAndDown() {
     topRefreshTab1();
-    bottomloadMoreTab1();
+    downReshTab2();
   }
-  
   //定义内容区
   var currentTabBlock = $("#content_block_tab");
-  
   function clearTabs() {
     $("#tab1").html("");
-    $("#tab4").html("");
-    $("#tab5").html("");
-    $("#tab6").html("");
   }
-  
+
   //热点
   function tab1Click(callBack) {
-    console.log('点击tab1')
     if (!!callBack) {
       callBack();
     }
@@ -72,16 +73,19 @@ function pageIndeLoad(data) {
     currentTabBlock.appendTo($("#tab1"));
     $.pullToRefreshTrigger($("#tab1Content"));
   }
-  
+
   //关注
   function tab2Click(callBack) {
     if (!!callBack) {
       callBack();
     }
+    clearTabs();
     whichTab = 2;
     isOpenBorside = 0;
+    topRefreshTab2();
+    $.pullToRefreshTrigger("#tab2Content");
   }
-  
+
   //我的
   function tab3Click(callBack) {
     if (!!callBack) {
@@ -90,7 +94,7 @@ function pageIndeLoad(data) {
     whichTab = 3;
     isOpenBorside = 0;
   }
-  
+
   //初始化请求参数
   function initParam() {
     parmaData = {}
@@ -101,7 +105,7 @@ function pageIndeLoad(data) {
     parmaData.blogNum = 10;
     parmaData.imId = selfImId;
   }
-  
+
   //获取登录信息
   var pramAjaxInfo = {};
   pramAjaxInfo.targetImId = selfImId,
@@ -119,7 +123,7 @@ function pageIndeLoad(data) {
         }
       }
     });
-  
+
   //下拉刷新的ajax
   function downResh(callBack) {
     //开启加载指示器
@@ -136,12 +140,15 @@ function pageIndeLoad(data) {
           $("#cardContent").html("");
           dataHandlerData(res.data);
           slideHot();
-          //获取最后的数据填充参数以便回调
-          // getLastData(res.data);
           //是否有回调
           if (!!callBack) {
             callBack();
           }
+        }
+        if (res.data.length > 10) {
+          bottomloadMoreTab1();
+        } else {
+          return;
         }
       },
       error: function (msg) {
@@ -175,12 +182,10 @@ function pageIndeLoad(data) {
     }
     if (currentClickId == "tabflag1") {
       initLunboUI(data);
-    } else {
-      //topicUiComment(data);
-    }
-    commentUi(data);
+      commentUi(data);
+     } 
   }
-  
+
   //滚动数据处理
   function dataHandlerDataBottom(data) {
     //判断是否有数据，无数据就显示没有更多
@@ -196,9 +201,9 @@ function pageIndeLoad(data) {
       $("#noMore").show();
       $.detachInfiniteScroll($('#tab1Content'));
     }
-    commentUi(data);
+      commentUi(data);
   }
-  
+
   function getBootomAjax(callBack) {
     //开启加载指示器
     $.showIndicator();
@@ -227,7 +232,7 @@ function pageIndeLoad(data) {
       }
     });
   }
-  
+
   //下拉刷新
   function topRefreshTab1() {
     // 添加'refresh'监听器
@@ -237,7 +242,7 @@ function pageIndeLoad(data) {
       parmaData.lastUpdateTime = "0";
       parmaData.blogNum = 10;
       downResh(closeUpRefrsh);
-  
+
       function closeUpRefrsh() {
         setTimeout(() => {
           isOverLoad = false;
@@ -247,33 +252,63 @@ function pageIndeLoad(data) {
       };
     });
   }
-  var loadMore = false;
-  var addMoreAjAX = false;
-  initLoadMore();
-  function initLoadMore() {
-    $(document).on("infinite", '#tab1Content', function () {
-      console.log('滚动刷新')
-      // 如果正在加载，则退出
-      if (loadMore == true) {
-        return;
-      }
-      if (addMoreAjAX) {
-        return;
-      }
-      loadMore = true;
 
-      function loadMoreCallBack() {
-        loadMore = false;
+ //关注下拉刷新
+  function topRefreshTab2() {
+    if(documentTab2Flag==true){
+      $(document).on('refresh', '#tab2Content', function (e) {
+        $(".content").scrollTop(0);
+        parmaData.lastBlogMsgid = 0;
+        parmaData.lastUpdateTime = "0";
+        parmaData.blogNum = 10;
+        downReshTab2(closeUpRefrsh);
+  
+        function closeUpRefrsh() {
+          setTimeout(() => {
+            isOverLoad = false;
+            $.pullToRefreshDone('#tab2Content');
+          }, 0);
+        };
+      });
+      documentTab2Flag = false;
+    }
+  };
+
+  function downReshTab2(callBack) {
+    //开启加载指示器
+    $.showIndicator();
+    var paramDatad = {};
+    paramDatad.id = 1;
+    paramDatad.tokenStr = "e6f5f17534f74db89c1048f4d3888888";
+    $.ajax({
+     url: contactServecesUrl+"/user/getOrgUserByOrgId",
+     //url: contactServecesUrl+"/user/getOrgUser",
+      type: "POST",
+      data: JSON.stringify(paramDatad),
+      contentType: "application/json;charset=utf-8",
+      success: function (res) {
+        console.log(res)
+        $.hideIndicator();
+        if (res.code == 200) {
+          //清空列表
+          $(".contentBlock").html("");
+          attentionInitUi(res.data.orgList);
+          //是否有回调
+          if (!!callBack) {
+            callBack();
+          }
+        }
+      },
+      error: function (msg) {
+        $.toast("网络错误");
       }
-      getBootomAjax(loadMoreCallBack);
     });
   }
 
   //滚动加载更多
   function bottomloadMoreTab1() {
     var loading = false;
-    $(document).on('infinite','#tab1Content', function () {
-      console.log('滚动加载更多')
+    $(document).on('infinite', function () {
       if (!isNeedScroll)
         return;
       // 如果正在加载，则退出
@@ -282,7 +317,6 @@ function pageIndeLoad(data) {
       loading = true;
       $('#noMore').hide();
       $('#loadMoreloding').show();
-      //模拟1s的加载过程
       getBootomAjax(stopLoad);
       function stopLoad() {
         // 重置加载flag
@@ -295,9 +329,12 @@ function pageIndeLoad(data) {
         $.refreshScroller();
       };
     });
-  }
-  
-  //轮播模板渲染
+  };
+
+  //关注的通讯录列表
+
+
+  //轮播ui模板
   function initLunboUI(data) {
     var html = '';
     html += '<div class="swiper-container">' +
@@ -317,19 +354,18 @@ function pageIndeLoad(data) {
       '</div>'
     $('#cardContent').append(html);
   }
-  
+
   //公共ui模板
   function commentUi(data) {
-
     var html = "";
     for (var i = 0; i < data.length; i++) {
-      //模板渲染
-      html += '<li class="ul_content_active_content" msg="'+data[i].blog.msgId+'">' +
+      if(data[i].blog != null){
+      html += '<li class="ul_content_active_content" msg="' + data[i].blog.msgId + '">' +
         '<p class="infoNameMyPage"><img src="./images/1.jpg"><span>云淡风轻</span></p>' +
-        '<div class="active_title">'+JSON.parse(data[i].blog.msgContent).text.title+'</div>' +
-        '<div class="active_article">'+JSON.parse(data[i].blog.msgContent).text.msg+'</div>' +
+        '<div class="active_title">' + JSON.parse(data[i].blog.msgContent).text.title + '</div>' +
+        // '<div class="active_article">' + JSON.parse(data[i].blog.msgContent).text.msg + '</div>' +
         '<div class="active_img">' +
-        '<img src="'+JSON.parse(data[i].blog.msgContent).picture[0].pictureUrl+'">' +
+        '<img src="' + JSON.parse(data[i].blog.msgContent).picture[0].pictureUrl + '">' +
         '</div>' +
         '<div class="good">' +
         '<div class="good_people">' +
@@ -347,9 +383,37 @@ function pageIndeLoad(data) {
         '</div>' +
         '</li>'
     }
+  }
     $('#cardContent').append(html);
   }
-  
+
+  //关注UI
+  function attentionInitUi(data) {
+    var html = "";
+    html += '<div class="inform">' +
+      '<span><img src="./images/touxiang.jpg" alt=""> 关注别人,第一时间得到他们的专栏更新</span>' +
+      '</div>' +
+      '<div class="personnelList">'
+    for (var i = 0; i < data.length; i++) {
+     
+      html += '<div class="personnel">' +
+        '<div class="headPortrait"> i' +
+        // '<img src="./images/5.jpg" alt="">' +
+        '</div>' +
+        '<div class="personnelInfo">' +
+        '<div class="personnelName">'+ data[i].name +'</div>' +
+        '<div class="profession">美篇摄影学</div>' +
+        '</div>' +
+        '<div class="attentionBtn">' +
+        '<a href="#">关注</a>' +
+        '</div>' +
+        '</div>' +
+        '</div>'
+      }
+    
+    $('.contentBlock').append(html);
+  }
+
   //滚动下拉显示回到顶部按钮
   $('.content').scroll(function () {
     scrollHeight = $('.content').scrollTop();
@@ -359,15 +423,15 @@ function pageIndeLoad(data) {
       $('.topBack').fadeOut();
     }
   });
+
   //点击按钮回到顶部
   $('#topBack').tap(function () {
     $('.content').scrollTop(0)
   });
-  
+
   //获取当前点击tab的当前id
   $('#indexTab').on('tap', 'li', function (e) {
     currentClickId = $(e.target).attr('id');
-    console.log(currentClickId);
   });
 
   //热点页面轮播图
@@ -386,7 +450,7 @@ function pageIndeLoad(data) {
       clickableClass: 'my-pagination-clickable',
     });
   }
-  
+
   //调用图片
   function getPhoto() {
     if (window.systemWeb != null && typeof (window.systemWeb) != "undefined") {
@@ -395,7 +459,7 @@ function pageIndeLoad(data) {
       alert(typeof (window.systemWeb));
     }
   }
-  
+
   //获取本地图片的地址
   // function uploadFileResult(objs) {
   //   if (objs == null || typeof (objs) == "undefined" || objs.length == 0) {} else {
@@ -404,88 +468,109 @@ function pageIndeLoad(data) {
   //     }
   //   }
   // }
-  
-  //关注
-  $(document).ready(function(){
-    var onOff=true;
-    var div=$(".attentionBtn a");
-    console.log(div.onOff)
-    div.click(function(){  
-      if (div.onOff) {
-       $(this).html("关注");
-       $(this).removeClass('attention_active');
-       div.onOff = false;
-      } else {
-        $(this).addClass('attention_active');
-        $(this).html("已关注");
-       div.onOff = true;
-      }
-     });
-    });
 
-  //路由跳转
-  $('#cardContent').on('click', '.infoNameMyPage', function () {
-    console.log(this)
-    $.router.load('./myPage.html');
-  })
-  
-  //点击专题列表到专题详情
-  $('#cardContent').on('tap', '.specialTopicLi', function () {
-    console.log('8888')
-    $.router.load('/topicDetails.html');
-  });
-  
-  //点击跳转到详情
-  
-$(".company_main_cover").on("tap",".ul_content_active_content",function(){
-   $.router.load('/details.html');
-   var msg = $(this).attr("msg");
-   $.ajax({
-      url: postUrl + '/getBlogInfo',
-      type: "POST",
-      data: '{ "msgId":"'+msg+'","imId":"'+selfImId+'"}',
-      contentType: "application/json;charset=utf-8",
-      success: function (res) {  
-        if (res.code == 200) {
-          //alert(JSON.parse(res.data[0].blog.msgContent).text.title)
-        var text = '<header class="bar bar-nav">'+
-            '<a class="button button-link button-nav pull-left getBackToPage" href="javascript:history.go(-1);">'+
-              '<span style="padding-left: 10px">'+
-                '<img src="./images/leftBack.png" alt="" style="width:10px;margin-top:14px;">'+
-              '</span>'+
-            '</a>'+
-            '<a href="./myPage.html" class="button button-link button-nav name-center" style="width: 30%;margin-left: 25%;">'+
-              '<img src="./images/timg.jpg">'+
-              '<span class="button-name">云淡风轻</span>'+
-            '</a>'+
-            '<span class="guanzhu">关注</span>'+
-          '</header>'+
-          '<div class="content" id="detailContent">'+
-            '<h3>'+JSON.parse(res.data[0].blog.msgContent).text.title+'</h3>'+
-            '<div class="detailInfo">'+
-              '<span class="time">2018.03.27</span>'+
-              '<a href="#">云淡风轻</a>'+
-              '<span class="readNum">阅读4524</span>'+
-            '</div>'+
-            '<div class="picture">'+
-              '<img src="'+JSON.parse(res.data[0].blog.msgContent).picture[0].pictureUrl+'" alt="" style="width:100%;height:170px;">'+
-            '</div>'+
-            '<div class="article">'+
-              '<p>'+JSON.parse(res.data[0].blog.msgContent).text.msg+'</p>'+
-            '</div>'
+  //关注、取消关注
+  $('#tab2Content').on('click', '.attentionBtn a', function (e) {
+    if ($(this).hasClass('attention_active') == false) {
+      var pramAjaxAttention = {};
+      pramAjaxAttention.imId = selfImId,
+        pramAjaxAttention.attentionImid = "100002",
+        pramAjaxAttention.from_type = 0,
+        $.ajax({
+          url: postUrl + "/attention",
+          type: 'post',
+          dataType: 'json',
+          data: JSON.stringify(pramAjaxAttention),
+          contentType: "application/json;charset=utf-8",
+          success: function (res) {
+            if (res.code == 200) {
+              $(e.target).addClass('attention_active');
+              $(e.target).html("已关注");
+            }
+          }
+        });
+    } else {
+      $.confirm('确定取消关注?', function () {
+          var pramAjaxAttentionNo = {};
+          pramAjaxAttentionNo.imId = selfImId,
+          pramAjaxAttentionNo.attentionImid = "100002",
+          $.ajax({
+            url: postUrl + "/cancelAttention",
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify(pramAjaxAttentionNo),
+            contentType: "application/json;charset=utf-8",
+            success: function (res) {
+              if (res.code == 200) {
+                $(e.target).removeClass('attention_active');
+                $(e.target).html("关注");
               }
-             // $(".data").html(text);
-            },
-            error: function (msg) {
-              $.toast("网络错误");
             }
           });
-});
-
-  $('#tabflag1').click(function(){
-    tab1Click();
+      });
+    }
   })
-  
+
+  //路由跳转
+  $('#cardContent').on('click', '.infoNameMyPage', function (e) {
+    e.stopImmediatePropagation();
+    $.router.load('./myPage.html');
+  });
+
+  //点击跳转到详情
+  $(".company_main_cover").on("click", ".ul_content_active_content", function () {
+    $.router.load('/details.html');
+    var msg = $(this).attr("msg");
+    console.log(msg)
+    // $.ajax({
+    //   url: postUrl + '/getBlogInfo',
+    //   type: "POST",
+    //   data: '{ "msgId":"' + msg + '","imId":"' + selfImId + '"}',
+    //   contentType: "application/json;charset=utf-8",
+    //   success: function (res) {
+    //     if (res.code == 200) {
+    //       //alert(JSON.parse(res.data[0].blog.msgContent).text.title)
+    //       var text = '<header class="bar bar-nav">' +
+    //         '<a class="button button-link button-nav pull-left getBackToPage" href="javascript:history.go(-1);">' +
+    //         '<span style="padding-left: 10px">' +
+    //         '<img src="./images/leftBack.png" alt="" style="width:10px;margin-top:14px;">' +
+    //         '</span>' +
+    //         '</a>' +
+    //         '<a href="./myPage.html" class="button button-link button-nav name-center" style="width: 30%;margin-left: 25%;">' +
+    //         '<img src="./images/timg.jpg">' +
+    //         '<span class="button-name">云淡风轻</span>' +
+    //         '</a>' +
+    //         '<span class="guanzhu">关注</span>' +
+    //         '</header>' +
+    //         '<div class="content" id="detailContent">' +
+    //         '<h3>' + JSON.parse(res.data[0].blog.msgContent).text.title + '</h3>' +
+    //         '<div class="detailInfo">' +
+    //         '<span class="time">2018.03.27</span>' +
+    //         '<a href="#">云淡风轻</a>' +
+    //         '<span class="readNum">阅读4524</span>' +
+    //         '</div>' +
+    //         '<div class="picture">' +
+    //         '<img src="' + JSON.parse(res.data[0].blog.msgContent).picture[0].pictureUrl + '" alt="" style="width:100%;height:170px;">' +
+    //         '</div>' +
+    //         '<div class="article">' +
+    //         '<p>' + JSON.parse(res.data[0].blog.msgContent).text.msg + '</p>' +
+    //         '</div>'
+    //     }
+    //     // $(".data").html(text);
+    //   },
+    //   error: function (msg) {
+    //     $.toast("网络错误");
+    //   }
+    // });
+  });
+
+  $('#tabflag1').click(function () {
+    tab1Click();
+  });
+  $('#tabflag2').click(function () {
+    tab2Click();
+  })
+
   if (!isResultPage) {
     return;
   }
@@ -512,36 +597,58 @@ $(".company_main_cover").on("tap",".ul_content_active_content",function(){
   tab1Click(openUpAndDown);
 }
 
-//新增的方法测试
-function initTime(){
-  
-}
-
 //点击保存
 var val;
 var titleImage;
-function titleSave(){
-   val = $(".textarea").val();
-   $.router.load('./active1.html');
-   $(".title_text a").text(val)
+function titleSave() {
+  val = $(".textarea").val();
+  $.router.load('./active1.html');
+  $(".title_text a").text(val)
 }
-
 
 //更换封面
-function changeBg(){
-  if (window.systemWeb != null && typeof(window.systemWeb) != "undefined") {
-          window.systemWeb.uploadFile(2);
-      } else {
-          alert(typeof(window.systemWeb));
-      }
+function changeBg() {
+  if (window.systemWeb != null && typeof (window.systemWeb) != "undefined") {
+    window.systemWeb.uploadFile(2);
+  } else {
+    alert(typeof (window.systemWeb));
+  }
 }
 
-
-
-function coverComplete(){
-   //sessionStorage.setItem("titleImage",titleImage);
-   /*var canvasImage = se*/
-  
-   $.router.load("./active1.html");
+function coverComplete() {
+  $.router.load("./active1.html");
 };
 
+  //时间戳
+  function getDateDiff(dateTimeStamp) {
+    //解析的时间段
+    var minute = 1000 * 60;
+    var hour = minute * 60;
+    var day = hour * 24;
+    var halfamonth = day * 15;
+    var month = day * 30;
+    var result; //最终结果
+    var now = new Date().getTime();
+    var diffValue = now - dateTimeStamp;
+    if (diffValue < 0) {
+      return "时间错误";
+    }
+    var monthC = diffValue / month;
+    var weekC = diffValue / (7 * day);
+    var dayC = diffValue / day;
+    var hourC = diffValue / hour;
+    var minC = diffValue / minute;
+    if (monthC >= 1) {
+      result = parseInt(monthC) + "个月前";
+    } else if (weekC >= 1) {
+      result = parseInt(weekC) + "周前";
+    } else if (dayC >= 1) {
+      result = parseInt(dayC) + "天前";
+    } else if (hourC >= 1) {
+      result = parseInt(hourC) + "个小时前";
+    } else if (minC >= 1) {
+      result = parseInt(minC) + "分钟前";
+    } else
+      result = "刚刚";
+    return result;
+  }
