@@ -1,6 +1,6 @@
 function pageCommentDetails() {
   //var postUrl = "http://20.95.15.171:8082/blogService/im";
-  var postUrl = "http://172.29.3.43:8082/blogService/im";
+  //var postUrl = "http://172.29.3.43:8082/blogService/im";
   var loadMore = false;
   var addMoreAjAX = false;
   //初始化参数
@@ -8,7 +8,7 @@ function pageCommentDetails() {
   paramaAjaxD.backwords = true;
   paramaAjaxD.lastId = 0;
   paramaAjaxD.lastUpdateTime = 0;
-  paramaAjaxD.imId = 'lzy';
+  paramaAjaxD.imId = selfImId;
   paramaAjaxD.pageNum = 10;
   //$('#uiContentList').html("");
   initDownResh();

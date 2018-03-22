@@ -1,6 +1,6 @@
 function pageAllComments() {
   //var postUrl = "http://20.95.15.171:8082/blogService/im";
-  var postUrl = "http://172.29.3.43:8082/blogService/im";
+  //var postUrl = "http://172.29.3.43:8082/blogService/im";
   var loadMore = false;
   var addMoreAjAX = false;
   //初始化参数
