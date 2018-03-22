@@ -52,6 +52,7 @@ function pageIndeLoad(data) {
   //开启上拉刷新  下拉加载更多
   function openUpAndDown() {
     topRefreshTab1();
+    bottomloadMoreTab1();
     downReshTab2();
   }
   //定义内容区
@@ -141,8 +142,13 @@ function pageIndeLoad(data) {
       data: JSON.stringify(parmaData),
       contentType: "application/json;charset=utf-8",
       success: function (res) {
+        console.log(res)
         $.hideIndicator();
         if (res.code == 200) {
+          if (res.data.length < 10) {
+           $("#noMore").show();
+           $("#loadMoreloding").hide();
+          }
           //清空列表
           $("#cardContent").html("");
           dataHandlerData(res.data);
@@ -152,26 +158,93 @@ function pageIndeLoad(data) {
             callBack();
           }
         }
-        if (res.data.length >= 10) {
-          bottomloadMoreTab1();
-        } else {
-          return;
-        }
       },
       error: function (msg) {
         $.toast("网络错误");
       }
     });
   }
-  //重新拼接好参数
-  function getLastData(datas) {
-    if (datas.length == 0) {
-      return;
+
+    //下拉刷新
+    function topRefreshTab1() {
+      // 添加'refresh'监听器
+      $(document).on('refresh', '#tab1Content', function (e) {
+        $(".content").scrollTop(0);
+        parmaData.lastBlogMsgid = 0;
+        parmaData.lastUpdateTime = "0";
+        parmaData.blogNum = 10;
+        downResh(closeUpRefrsh);
+  
+        function closeUpRefrsh() {
+          setTimeout(() => {
+            isOverLoad = false;
+            $.pullToRefreshDone('#tab1Content');
+            $.attachInfiniteScroll($('#tab1Content'));
+          }, 0);
+        };
+      });
     }
-    var lastData = datas[datas.length - 1].blog;
-    parmaData.lastBlogMsgid = lastData.blogMsgId;
-    parmaData.lastUpdateTime = lastData.updateTime;
-  }
+  
+   //关注下拉刷新
+    function topRefreshTab2() {
+      if(documentTab2Flag==true){
+        $(document).on('refresh', '#tab2Content', function (e) {
+          $(".content").scrollTop(0);
+          parmaData.lastBlogMsgid = 0;
+          parmaData.lastUpdateTime = "0";
+          parmaData.blogNum = 10;
+          downReshTab2(closeUpRefrsh);
+    
+          function closeUpRefrsh() {
+            setTimeout(() => {
+              isOverLoad = false;
+              $.pullToRefreshDone('#tab2Content');
+            }, 0);
+          };
+        });
+        documentTab2Flag = false;
+      }
+    };
+  
+    function downReshTab2(callBack) {
+      //开启加载指示器
+      $.showIndicator();
+      var paramDatad = {};
+      paramDatad.randomNum = 10;
+      $.ajax({
+       url: contactServecesUrl+"/user/getRandomUsers",
+        type: "POST",
+        data: JSON.stringify(paramDatad),
+        contentType: "application/json;charset=utf-8",
+        success: function (res) {
+          $.hideIndicator();
+          if (res.code == 200) {
+            //清空列表
+            $(".contentBlock").html("");
+            attentionInitUi(res.data);
+            //是否有回调
+            if (!!callBack) {
+              callBack();
+            }
+          }
+        },
+        error: function (msg) {
+          $.toast("网络错误");
+        }
+      });
+    }
+
+  
+  //重新拼接好参数
+  // function getLastData(datas) {
+  //   if (datas.length == 0) {
+  //     return;
+  //   }
+  //   var lastData = datas[datas.length - 1].blog;
+  //   console.log(lastData)
+  //   parmaData.lastBlogMsgid = lastData.blogMsgId;
+  //   parmaData.lastUpdateTime = lastData.updateTime;
+  // }
   //数据处理
   function dataHandlerData(data) {
     //判断是否有数据，无数据就显示没有更多
@@ -220,14 +293,24 @@ function pageIndeLoad(data) {
       data: JSON.stringify(parmaData),
       contentType: "application/json;charset=utf-8",
       success: function (res) {
+        console.log(res)
         $.hideIndicator();
         if (res.code == 200) {
+          if (res.data.length != 0) {
+            //最后一条的时间和id;
+            var lastData = res.data[res.data.length - 1].blog;
+            console.log(lastData)
+            parmaData.lastBlogMsgid = lastData.blogMsgId;
+            parmaData.lastUpdateTime = lastData.updateTime;
+          } else {
+            $('.infinite-scroll-preloader').hide();
+          }
           isOverLoad = true;
           $("#noMore").show();
           $("#loadMoreloding").hide();
           dataHandlerDataBottom(res.data);
           //获取最后的数据填充参数以便回调
-          getLastData(res.data);
+          //getLastData(res.data);
           //是否有回调
           if (!!callBack) {
             callBack();
@@ -236,75 +319,6 @@ function pageIndeLoad(data) {
       },
       error: function (msg) {
         $.toast("网络请求超时！！！")
-      }
-    });
-  }
-
-  //下拉刷新
-  function topRefreshTab1() {
-    // 添加'refresh'监听器
-    $(document).on('refresh', '#tab1Content', function (e) {
-      $(".content").scrollTop(0);
-      parmaData.lastBlogMsgid = 0;
-      parmaData.lastUpdateTime = "0";
-      parmaData.blogNum = 10;
-      downResh(closeUpRefrsh);
-
-      function closeUpRefrsh() {
-        setTimeout(() => {
-          isOverLoad = false;
-          $.pullToRefreshDone('#tab1Content');
-          $.attachInfiniteScroll($('#tab1Content'));
-        }, 0);
-      };
-    });
-  }
-
- //关注下拉刷新
-  function topRefreshTab2() {
-    if(documentTab2Flag==true){
-      $(document).on('refresh', '#tab2Content', function (e) {
-        $(".content").scrollTop(0);
-        parmaData.lastBlogMsgid = 0;
-        parmaData.lastUpdateTime = "0";
-        parmaData.blogNum = 10;
-        downReshTab2(closeUpRefrsh);
-  
-        function closeUpRefrsh() {
-          setTimeout(() => {
-            isOverLoad = false;
-            $.pullToRefreshDone('#tab2Content');
-          }, 0);
-        };
-      });
-      documentTab2Flag = false;
-    }
-  };
-
-  function downReshTab2(callBack) {
-    //开启加载指示器
-    $.showIndicator();
-    var paramDatad = {};
-    paramDatad.randomNum = 10;
-    $.ajax({
-     url: contactServecesUrl+"/user/getRandomUsers",
-      type: "POST",
-      data: JSON.stringify(paramDatad),
-      contentType: "application/json;charset=utf-8",
-      success: function (res) {
-        $.hideIndicator();
-        if (res.code == 200) {
-          //清空列表
-          $(".contentBlock").html("");
-          attentionInitUi(res.data);
-          //是否有回调
-          if (!!callBack) {
-            callBack();
-          }
-        }
-      },
-      error: function (msg) {
-        $.toast("网络错误");
       }
     });
   }
@@ -632,8 +646,6 @@ function changeBg() {
     alert(typeof (window.systemWeb));
   }
 }
-
-
 
   //时间戳
   function getDateDiff(dateTimeStamp) {

@@ -311,6 +311,7 @@
   margin-left: 0.5rem;
 }
 .newComment-name1{
+  font-size: 16px;
   color: #1170fd;
 }
 .newComment-time{
@@ -376,6 +377,7 @@
   margin-bottom: 1rem;
 }
 .watchAll{
+  font-size: 14px;
   margin-top: 0.5rem;
   text-align: center;
   color: green;

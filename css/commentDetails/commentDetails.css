@@ -8,6 +8,8 @@
   font-size: 14px;
   text-align: center;
   display: none;
+  margin-top: 10px;
+  color: #9b9b9b;
 }
 
 #commentDetails .commentList {

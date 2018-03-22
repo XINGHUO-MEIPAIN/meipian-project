@@ -28,8 +28,7 @@ function details(){
 
     function commentInitUi(data){
       html = '';
-      if( data[0].blog.blogMsgId == currentClickMsgId && data[0].comment.length!=0){
-      for (var i = 0; i < 5; i++) {
+      for (var i = data[0].comment.length-1; i >=0 ; i--) {
         var msg = JSON.parse(data[0].comment[i].msgContent).text.msg;
         html += '<div class="newComment-detail">'+
         '<div class="newComment-avatar">'+
@@ -44,7 +43,6 @@ function details(){
         '</div>'+
       '</div>'
       }
-    }
       html+= '<div class="watchAll" id="watchAll">查看所有评论></div>'
       $('.newComment-detailContent').append(html);
     }

@@ -6,15 +6,17 @@ function pageCommentDetails() {
   //初始化参数
   var paramaAjaxD = {};
   paramaAjaxD.msgId = currentClickMsgId;
+  console.log( paramaAjaxD.msgId)
   paramaAjaxD.imId = selfImId;
-  $('#uiContentList').html("");
+  //$('#uiContentList').html("");
   initDownResh();
   //initLoadMore();
   //进入自动触发一次
   $.pullToRefreshTrigger("#commentContent");
   //下拉刷新
   function initDownResh() {
-    if (documentFlag == true) {
+    // if (documentFlag == true) {
+    //   console.log(documentFlag)
       $(document).on("refresh", "#commentContent", function () {
         // 模拟1s的加载过程
         function callBackFunc() {
@@ -26,67 +28,67 @@ function pageCommentDetails() {
         paramaAjaxD.lastUpdateTime = 0;
         render(callBackFunc);
       });
-      documentFlag = false;
-    }
+    //   documentFlag = false;
+    // }
   }
 
-  function initLoadMore() {
-    if (documentFlag2 == true) {
-      $(document).on("infinite", "#commentContent", function () {
-        // 如果正在加载，则退出
-        if (loadMore == true) {
-          return;
-        }
-        if (addMoreAjAX) {
-          return;
-        }
-        loadMore = true;
+  // function initLoadMore() {
+  //   if (documentFlag2 == true) {
+  //     $(document).on("infinite", "#commentContent", function () {
+  //       // 如果正在加载，则退出
+  //       if (loadMore == true) {
+  //         return;
+  //       }
+  //       if (addMoreAjAX) {
+  //         return;
+  //       }
+  //       loadMore = true;
 
-        function loadMoreCallBack() {
-          loadMore = false;
-        }
-        loadMoreAjax(loadMoreCallBack);
-      });
-      documentFlag2 = false;
-    }
-  }
+  //       function loadMoreCallBack() {
+  //         loadMore = false;
+  //       }
+  //       loadMoreAjax(loadMoreCallBack);
+  //     });
+  //     documentFlag2 = false;
+  //   }
+  // }
 
-  //加载更多
-  function loadMoreAjax(callBackFunc) {
-    $.showIndicator();
-    $('#noMore').hide();
-    $('.infinite-scroll-preloader').show();
-    $.ajax({
-      url: postUrl + "/getBlogInfo",
-      type: "post",
-      dataType: "json",
-      data: JSON.stringify(paramaAjaxD),
-      contentType: "application/json;charset=utf-8",
-      success: function (res) {
-        console.log(res)
-        var data = res.data;
-        if (data.length != 0) {
-          //最后一条的时间和id;
-          paramaAjaxD.lastId = data[data.length - 1].msgId;
-          paramaAjaxD.lastUpdateTime = data[data.length - 1].updateTime;
-        } else {
-          $('.infinite-scroll-preloader').hide();
-        }
-        if (data.length < 10) {
-          addMoreAjAX = true;
-          $('.infinite-scroll-preloader').hide();
-          $('#noMore').show();
-        }
-        if (res.code == 200 && res.data.length != 0) {
-          if (!!callBackFunc) {
-            callBackFunc();
-          }
-          dataHandler(data);
-        }
-        $.hideIndicator();
-      }
-    });
-  }
+  // //加载更多
+  // function loadMoreAjax(callBackFunc) {
+  //   $.showIndicator();
+  //   $('#noMore').hide();
+  //   $('.infinite-scroll-preloader').show();
+  //   $.ajax({
+  //     url: postUrl + "/getBlogInfo",
+  //     type: "post",
+  //     dataType: "json",
+  //     data: JSON.stringify(paramaAjaxD),
+  //     contentType: "application/json;charset=utf-8",
+  //     success: function (res) {
+  //       console.log(res)
+  //       var data = res.data;
+  //       if (data.length != 0) {
+  //         //最后一条的时间和id;
+  //         paramaAjaxD.lastId = data[data.length - 1].msgId;
+  //         paramaAjaxD.lastUpdateTime = data[data.length - 1].updateTime;
+  //       } else {
+  //         $('.infinite-scroll-preloader').hide();
+  //       }
+  //       if (data.length < 10) {
+  //         addMoreAjAX = true;
+  //         $('.infinite-scroll-preloader').hide();
+  //         $('#noMore').show();
+  //       }
+  //       if (res.code == 200 && res.data.length != 0) {
+  //         if (!!callBackFunc) {
+  //           callBackFunc();
+  //         }
+  //         dataHandler(data);
+  //       }
+  //       $.hideIndicator();
+  //     }
+  //   });
+  // }
 
   function render(callBackFunc) {
     $('.infinite-scroll-preloader').hide();
@@ -123,16 +125,8 @@ function pageCommentDetails() {
 
   //处理数据到UI
   function dataHandler(data) {
-    // for (var i = 0; i < data.length; i++) {
-    //   if( data[i].blog.blogMsgId == currentClickMsgId && data[i].comment.length!=0){
-    //     for (var j = data[i].comment.length-1; j >= 0; j--){
-    //        //模板渲染
-    //       uiItemList(data,i,j);
-    //       }
-    //   }
-    // }
     if( data[0].blog.blogMsgId == currentClickMsgId && data[0].comment.length!=0){
-      for(var i = 0;i<data[0].comment.length;i++){
+      for(var i = data[0].comment.length-1;i>=0;i--){
         uiItemList(data, i)
       }
     }
