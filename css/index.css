@@ -20,9 +20,11 @@
 .add_type .add_type_div a{color:#ccc;}
 .title_text a{color: white}
 .cover_content{padding-top: 2.4rem;position: absolute;height:100%;overflow: scroll;width: 100% }
-.my_img{position: absolute;}
-.my_img img{width: 100%}
-
+.my_img img{width: 100%;position: absolute;height:100%}
+.my_img {width: 100%;}
+.editor_face{
+	width: 100%
+}
 .page .bar-nav {
 	background: #0894ec;
 }
@@ -158,7 +160,6 @@ em{
 	padding: 10px;
 }
 .active_img{
-	height: 8rem;
 	overflow: hidden;
 }
 .active_img img{

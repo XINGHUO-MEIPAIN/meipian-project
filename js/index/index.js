@@ -615,9 +615,7 @@ function changeBg() {
   }
 }
 
-function coverComplete() {
-  $.router.load("./active1.html");
-};
+
 
   //时间戳
   function getDateDiff(dateTimeStamp) {
@@ -651,4 +649,14 @@ function coverComplete() {
     } else
       result = "刚刚";
     return result;
+  }
+
+  //从首页进入发表页面  初始化
+  function report(){
+     sessionStorage.clear();
+     $.router.load("./add_new_item.html");
+     $(".my_img").html("");
+     $(".title_text a").text("点击设置标题");
+     //从首页进入，来让发表界面初始化.
+     sessionStorage.setItem("init","init")
   }

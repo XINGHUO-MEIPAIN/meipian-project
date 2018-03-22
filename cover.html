@@ -14,7 +14,7 @@
      <div class="hideMask">
         <canvas id="c1"></canvas> 
      </div>
-     <a href="#" class="button button-big button-fill button-success" onclick="clipImage()" style="background: linear-gradient(to bottom, #56d0ea , rgb(8, 148, 236));width: 10rem; margin: 1rem auto; ">打印成封面效果</a>
+     <a href="#" class="button pageXg button-big button-fill button-success" onclick="clipImage()" style="background: linear-gradient(to bottom, #56d0ea , rgb(8, 148, 236));width: 10rem; margin: 1rem auto; ">打印成封面效果</a>
      
          <div class="mark1"></div>
          <div class="mark" id="mark"></div>
@@ -31,11 +31,9 @@
     if(objs==null||typeof(objs)=="undefined"||objs.length==0){
 
     }else{ 
-       titleImage = "data:image/jpeg;base64,"+objs[0].fileBase64;
-       clip(titleImage);
-      // $(".editor_1").html('<img data="'+objs[0].contentPath+'" src="'+titleImage+'">'); 
+        titleImage = "data:image/jpeg;base64,"+objs[0].fileBase64;
+        clip(titleImage);
         sessionStorage.setItem("titleImage",titleImage);
-        sessionStorage.setItem("contentPath",objs[0].contentPath);   
      };
    };
   
@@ -44,9 +42,8 @@
       var oMark = document.getElementById("mark");
       var canvas3= document.getElementById("c3");
       canvas1.height = 300;
-      canvas1.width=300;
-      canvas3.height=100;
-      canvas3.width=240;
+      canvas1.width=360;
+
       var cxt1 = canvas1.getContext("2d");
       var img = new Image();
       img.src = titleImage;
@@ -59,38 +56,28 @@
     var cxt2=canvas2.getContext("2d");
     img.onload = function(){
         cxt1.drawImage(img,0,0,canvas1.width,canvas1.height);
-        var dataImg = cxt1.getImageData(srcX,srcY,sWidth,90)
+        var dataImg = cxt1.getImageData(srcX,srcY,sWidth,sHeight)
         canvas2.width = sWidth;
         canvas2.height = sHeight;
         cxt2.putImageData(dataImg,0,0,0,0,canvas2.width,canvas2.height)
         var img2 = canvas2.toDataURL("image/png");
-     
-        var cxt3=canvas3.getContext("2d")
-        var img3 = new Image();
+        var cxt3=canvas3.getContext("2d");
+        img3 = new Image();
         img3.src = img2;
         img3.onload  = function(){
-            cxt3.drawImage(img3,0,0,300,150);
+            cxt3.drawImage(img3,0,0,canvas3.width,canvas3.height);
         }
     };
    }
+
+
+   function coverComplete() {  
+      $.router.load("./active1.html");
+      $(".my_img").html("<img src='"+img3.src+"'>");  
+      $(".my_img img").css("width",$(window).width()+'px')
+   };
    
-   // var start,end,dis;
-   // $(document).on("touchstart",".mark",function(e){
-   //    start = event.changedTouches[0].pageX;
 
-   // });
-   // $(document).on("touchmove",".mark",function(e){
-   //    e.preventDefault();
-   //    var move = event.changedTouches[0].pageX;
-   //    var dis = start - move ;
-   //    $("#c1").css("top",dis);
-   //    clip(titleImage);
-
-   // });
-   // $(document).on("touchstart",".mark",function(e){
-   //    end = event.changedTouches[0].pageX;
-
-   // });
       var start,end,dis;
       $(document).on("touchstart",".mark",function(e){
             _x_start=e.touches[0].pageX;
@@ -106,20 +93,13 @@
           
             var maskHeight = parseFloat($(".mark1").height());
             var maskHeight1 = parseFloat($(".mark2").height());
-            // if(top > maskHeight){
-            //    $("#c1").css("top",maskHeight);
-            //    return;
-            //  };
-            //  if(top < maskHeight1){
-            //    $("#c1").css("top",maskHeight1);
-            //    return;
-            //  }
+
             $("#c1").css("top",parseFloat(_y_move)-parseFloat(_y_start)+parseFloat(top_start)+"px");
              
         })
         
-        function clipImage(){
-           clip(titleImage);   
+        function clipImage(){             
+             clip(titleImage);               
         }
       
 
