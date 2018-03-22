@@ -300,6 +300,7 @@
 .newComment{
   border-top: 0.1rem solid #ccc;
   margin-top: 0.8rem;
+  padding: 10px;
 }
 .newComment-avatar{
   width: 2rem;
@@ -521,4 +522,14 @@
 
 .buttons-tab .button.active {
   border-bottom: 4px solid #0894ec;
+}
+.article img{
+  width: 100%;
+  margin:1rem 0rem;
+}
+.article {
+  text-align: center;
+}
+#details .bar-tab{
+  position: fixed!important;
 }
