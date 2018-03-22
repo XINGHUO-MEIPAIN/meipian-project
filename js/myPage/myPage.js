@@ -1,7 +1,7 @@
 function myPageInfo() {
   //var postUrl = "http://20.95.15.171:8082/blogService/im";
   //var postUrl = "http://172.29.3.43:8082/blogService/im";
-  var postUrl = "http://20.95.15.171:8083/mpService/im";
+  //var postUrl = "http://20.95.15.171:8083/mpService/im";
   //开启加载指示器
   $.showIndicator();
   $(document).on('refresh', '#content', function (e) {
@@ -28,7 +28,6 @@ function myPageInfo() {
 
   //获取个人相关动态
   var pramAjaxDy = {};
-  //pramAjaxDy.targetImId = 'txz',
   pramAjaxDy.imId = selfImId,
   pramAjaxDy.backwords = true;
   pramAjaxDy.lastBlogMsgid = 0;

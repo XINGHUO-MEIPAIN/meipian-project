@@ -1,4 +1,6 @@
 function details(){
+   currentClickMsgId = currentClickMsgId+"" ;
+  console.log(currentClickMsgId)
     $('#detaisComment').click(function(){
       $.router.load('./commentDetails.html');
     });
@@ -7,7 +9,7 @@ function details(){
     });
     $('.guanzhu').click(function(){
       $(this).remove();
-      $.toast('¹Ø×¢³É¹¦');
+      $.toast('å…³æ³¨æˆåŠŸ');
     })
 }
 

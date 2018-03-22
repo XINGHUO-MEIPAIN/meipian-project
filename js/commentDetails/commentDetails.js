@@ -1,6 +1,5 @@
 function pageCommentDetails() {
-  //var postUrl = "http://20.95.15.171:8082/blogService/im";
-  //var postUrl = "http://172.29.3.43:8082/blogService/im";
+  currentClickMsgId = currentClickMsgId+"" ;
   var loadMore = false;
   var addMoreAjAX = false;
   //初始化参数
@@ -60,12 +59,13 @@ function pageCommentDetails() {
     $('#noMore').hide();
     $('.infinite-scroll-preloader').show();
     $.ajax({
-      url: postUrl + "/getUserBlog",
+      url: postUrl + "/getBlog",
       type: "post",
       dataType: "json",
       data: JSON.stringify(paramaAjaxD),
       contentType: "application/json;charset=utf-8",
       success: function (res) {
+        console.log(res)
         var data = res.data;
         if (data.length != 0) {
           //最后一条的时间和id;
@@ -97,7 +97,7 @@ function pageCommentDetails() {
     //开启加载指示器
     $.showIndicator();
     $.ajax({
-      url: postUrl + "/getUserBlog",
+      url: postUrl + "/getBlog",
       type: "post",
       dataType: "json",
       data: JSON.stringify(paramaAjaxD),
@@ -128,54 +128,61 @@ function pageCommentDetails() {
   //处理数据到UI
   function dataHandler(data) {
     for (var i = 0; i < data.length; i++) {
-      //模板渲染
-      uiItemList(data, i);
+      if( data[i].blog.blogMsgId == currentClickMsgId && data[i].comment.length!=0){
+        for (var j = data[i].comment.length-1; j >= 0; j--){
+           //模板渲染
+          uiItemList(data,i,j);
+          }
+      }
     }
   }
   //ui模板
-  function uiItemList(data, i) {
-    var msg = JSON.parse(data[i].blog.msgContent).text.msg;
-    var node = '<div class="commentList" id ="'+data[i].blog.msgId+'">';
+  function uiItemList(data, i,j) {
+    var name = data[i].blog.userName;
+    console.log(name)
+    var msg = JSON.parse(data[i].comment[j].msgContent).text.msg;
+    var node = '<div class="commentList" id ="'+data[i].comment[j].blogMsgId+'">';
     node += ' <div class="infoImage">';
     node += '   <img src="./images/timg.jpg" alt="">';
     node += ' </div>';
     node += ' <div class="infoContent">';
     node += '   <div class="infoName">';
-    node += '     <span class="userName">晓歌</span>';
+    node += '     <span class="userName"> '+ data[i].blog.userName +'</span>';
     node += '     <span class="praise">';
     node += '       <img src="./images/pic1.png" alt="" class="praiseImg"> <span class="praiseNum">0</span>';
     node += '     </span>';
     node += '   </div>';
     node += '   <div class="infoContentText"> '+ Face().get(msg) +'</div>';
-    node += '<div class="infoContentReply">';
-    node += '<div class="replyList">';
-    node += '  <span class="replyText"><span class="infoNameReply">冰心:</span>主要是赶巧.安写幽默小段子多了,在这写点评换换口味.主要是赶巧.安写幽默小段子多了,在这写          点评换换口味主要是赶巧.安写幽默小段子多了';
-    node += '</span>';
-    node += '</div>';
-    node += ' <div class="replyCount">共10条回复></div>';
-    node += '</div>';
-    node += '   <div class="infoTime">';
-    node += '     7分钟前';
-    node += '   </div>';
-    node += ' </div>';
+    // node += '<div class="infoContentReply">';
+    // node += '<div class="replyList">';
+    // node += '  <span class="replyText"><span class="infoNameReply">冰心:</span>主要是赶巧.安写幽默小段子多了,在这写点评换换口味.主要是赶巧.安写幽默小段子多了,在这写          点评换换口味主要是赶巧.安写幽默小段子多了';
+    // node += '</span>';
+    // node += '</div>';
+    // node += ' <div class="replyCount">共10条回复></div>';
+    // node += '</div>';
+    // node += '   <div class="infoTime">';
+    // node += '     7分钟前';
+    // node += '   </div>';
+    // node += ' </div>';
     node += ' </div>';
     $("#uiContentList").append(node);
   }
 
   function uiContent(data) {
+    var msg = JSON.parse(data.msgContent).text.msg;
     var node = '<div class="commentList">';
     node += ' <div class="infoImage">';
     node += '   <img src="./images/timg.jpg" alt="">';
     node += ' </div>';
     node += ' <div class="infoContent">';
     node += '   <div class="infoName">';
-    node += '     <span class="userName">晓歌</span>';
+    node += '     <span class="userName">'+ data.userName +'</span>';
     node += '     <span class="praise">';
     node += '       <img src="./images/pic1.png" alt="" class="praiseImg"> <span class="praiseNum">0</span>';
     node += '     </span>';
     node += '   </div>';
     node += '   <div class="infoContentText">';
-    node += '     哈哈哈哈哈';
+    node += '     '+ msg+'';
     node += '   </div>';
     node += '   <div class="infoTime">';
     node += '     刚刚';
@@ -249,11 +256,11 @@ function pageCommentDetails() {
           "msg": commentText
         }
       },
-      pramAjaxSend.blogMsgid = "140921150598283264",
-      pramAjaxSend.blogAuthorImid = "100001",
-      pramAjaxSend.pimid = "100001",
-      pramAjaxSend.pmsgid = "140921150598283264",
-      pramAjaxSend.imid = "txz",
+      pramAjaxSend.blogMsgid = currentClickMsgId,
+      pramAjaxSend.blogAuthorImid = selfImId,
+      pramAjaxSend.pimid = selfImId,
+      pramAjaxSend.pmsgid = currentClickMsgId,
+      pramAjaxSend.imid = selfImId,
       $.ajax({
         url: postUrl + "/makeComments",
         type: 'post',

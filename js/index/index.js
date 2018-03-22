@@ -52,7 +52,6 @@ function pageIndeLoad(data) {
   //开启上拉刷新  下拉加载更多
   function openUpAndDown() {
     topRefreshTab1();
-    bottomloadMoreTab1();
     downReshTab2();
   }
   //定义内容区
@@ -142,6 +141,7 @@ function pageIndeLoad(data) {
       data: JSON.stringify(parmaData),
       contentType: "application/json;charset=utf-8",
       success: function (res) {
+        console.log(res)
         $.hideIndicator();
         if (res.code == 200) {
           //清空列表
@@ -153,8 +153,8 @@ function pageIndeLoad(data) {
             callBack();
           }
         }
-        if (res.data.length > 10) {
-          
+        if (res.data.length >= 10) {
+          bottomloadMoreTab1();
         } else {
           return;
         }
@@ -336,9 +336,6 @@ function pageIndeLoad(data) {
     });
   };
 
-  //关注的通讯录列表
-
-
   //轮播ui模板
   function initLunboUI(data) {
     var html = '';
@@ -391,6 +388,7 @@ function pageIndeLoad(data) {
   }
     $('#cardContent').append(html);
   }
+
 
   //关注UI
   function attentionInitUi(data) {
@@ -477,8 +475,8 @@ function pageIndeLoad(data) {
   $('#tab2Content').on('click', '.attentionBtn a', function (e) {
     if ($(this).hasClass('attention_active') == false) {
       var pramAjaxAttention = {};
-      pramAjaxAttention.imId = selfImId,
-        pramAjaxAttention.attentionImid = "100002",
+        pramAjaxAttention.imId = selfImId,
+        pramAjaxAttention.attentionImid = selfImId,
         pramAjaxAttention.from_type = 0,
         $.ajax({
           url: postUrl + "/attention",
@@ -520,52 +518,14 @@ function pageIndeLoad(data) {
     e.stopImmediatePropagation();
     $.router.load('./myPage.html');
   });
-
+  
   //点击跳转到详情
-  $(".company_main_cover").on("click", ".ul_content_active_content", function () {
-    $.router.load('/details.html');
-    var msg = $(this).attr("msg");
-    // $.ajax({
-    //   url: postUrl + '/getBlogInfo',
-    //   type: "POST",
-    //   data: '{ "msgId":"' + msg + '","imId":"' + selfImId + '"}',
-    //   contentType: "application/json;charset=utf-8",
-    //   success: function (res) {
-    //     if (res.code == 200) {
-    //       //alert(JSON.parse(res.data[0].blog.msgContent).text.title)
-    //       var text = '<header class="bar bar-nav">' +
-    //         '<a class="button button-link button-nav pull-left getBackToPage" href="javascript:history.go(-1);">' +
-    //         '<span style="padding-left: 10px">' +
-    //         '<img src="./images/leftBack.png" alt="" style="width:10px;margin-top:14px;">' +
-    //         '</span>' +
-    //         '</a>' +
-    //         '<a href="./myPage.html" class="button button-link button-nav name-center" style="width: 30%;margin-left: 25%;">' +
-    //         '<img src="./images/timg.jpg">' +
-    //         '<span class="button-name">云淡风轻</span>' +
-    //         '</a>' +
-    //         '<span class="guanzhu">关注</span>' +
-    //         '</header>' +
-    //         '<div class="content" id="detailContent">' +
-    //         '<h3>' + JSON.parse(res.data[0].blog.msgContent).text.title + '</h3>' +
-    //         '<div class="detailInfo">' +
-    //         '<span class="time">2018.03.27</span>' +
-    //         '<a href="#">云淡风轻</a>' +
-    //         '<span class="readNum">阅读4524</span>' +
-    //         '</div>' +
-    //         '<div class="picture">' +
-    //         '<img src="' + JSON.parse(res.data[0].blog.msgContent).picture[0].pictureUrl + '" alt="" style="width:100%;height:170px;">' +
-    //         '</div>' +
-    //         '<div class="article">' +
-    //         '<p>' + JSON.parse(res.data[0].blog.msgContent).text.msg + '</p>' +
-    //         '</div>'
-    //     }
-    //     // $(".data").html(text);
-    //   },
-    //   error: function (msg) {
-    //     $.toast("网络错误");
-    //   }
-    // });
-  });
+    $(".company_main_cover").on("click", ".ul_content_active_content", function () {
+      $.router.load('/details.html');
+      currentClickMsgId = $(this).attr("msg");
+      console.log(currentClickMsgId)
+    });
+
 
   if (!isResultPage) {
     return;
@@ -592,6 +552,9 @@ function pageIndeLoad(data) {
   //初始化方法
   tab1Click(openUpAndDown);
 }
+
+
+ 
 
 //点击保存
 var val;

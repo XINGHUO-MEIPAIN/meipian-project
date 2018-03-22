@@ -10,10 +10,6 @@ var modelImg = "../../images/addImg.png";
 var modeltext = '<span>点击添加文字</span>';
 
 
-pdf -> img
-
-
-
 //创建添加图片文字框
 var addNewChoose = '<div class="imgContent">'+
                        '<img src="../../images/write.png" onclick="addWrite(this)">'+
