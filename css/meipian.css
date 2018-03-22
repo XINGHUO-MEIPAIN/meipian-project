@@ -301,6 +301,7 @@
   border-top: 0.1rem solid #ccc;
   margin-top: 0.8rem;
   padding: 10px;
+  margin-bottom: 50px;
 }
 .newComment-avatar{
   width: 2rem;
@@ -375,7 +376,7 @@
   margin-bottom: 1rem;
 }
 .watchAll{
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
   text-align: center;
   color: green;
 }

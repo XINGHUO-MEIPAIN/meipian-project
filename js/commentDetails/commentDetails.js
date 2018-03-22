@@ -1,17 +1,15 @@
 function pageCommentDetails() {
   currentClickMsgId = currentClickMsgId+"" ;
+  console.log(currentClickMsgId)
   var loadMore = false;
   var addMoreAjAX = false;
   //初始化参数
   var paramaAjaxD = {};
-  paramaAjaxD.backwords = true;
-  paramaAjaxD.lastId = 0;
-  paramaAjaxD.lastUpdateTime = 0;
+  paramaAjaxD.msgId = currentClickMsgId;
   paramaAjaxD.imId = selfImId;
-  paramaAjaxD.pageNum = 10;
-  //$('#uiContentList').html("");
+  $('#uiContentList').html("");
   initDownResh();
-  initLoadMore();
+  //initLoadMore();
   //进入自动触发一次
   $.pullToRefreshTrigger("#commentContent");
   //下拉刷新
@@ -59,7 +57,7 @@ function pageCommentDetails() {
     $('#noMore').hide();
     $('.infinite-scroll-preloader').show();
     $.ajax({
-      url: postUrl + "/getBlog",
+      url: postUrl + "/getBlogInfo",
       type: "post",
       dataType: "json",
       data: JSON.stringify(paramaAjaxD),
@@ -97,7 +95,7 @@ function pageCommentDetails() {
     //开启加载指示器
     $.showIndicator();
     $.ajax({
-      url: postUrl + "/getBlog",
+      url: postUrl + "/getBlogInfo",
       type: "post",
       dataType: "json",
       data: JSON.stringify(paramaAjaxD),
@@ -115,8 +113,6 @@ function pageCommentDetails() {
             $('.infinite-scroll-preloader').hide();
             $('#noMore').show();
           }
-          paramaAjaxD.lastId = res.data[res.data.length - 1].msgId;
-          paramaAjaxD.lastUpdateTime = res.data[res.data.length - 1].updateTime;
           dataHandler(res.data);
         } else {
           $("#uiContentList").append("<p>暂时没有消息</p>");
@@ -127,27 +123,32 @@ function pageCommentDetails() {
 
   //处理数据到UI
   function dataHandler(data) {
-    for (var i = 0; i < data.length; i++) {
-      if( data[i].blog.blogMsgId == currentClickMsgId && data[i].comment.length!=0){
-        for (var j = data[i].comment.length-1; j >= 0; j--){
-           //模板渲染
-          uiItemList(data,i,j);
-          }
+    // for (var i = 0; i < data.length; i++) {
+    //   if( data[i].blog.blogMsgId == currentClickMsgId && data[i].comment.length!=0){
+    //     for (var j = data[i].comment.length-1; j >= 0; j--){
+    //        //模板渲染
+    //       uiItemList(data,i,j);
+    //       }
+    //   }
+    // }
+    if( data[0].blog.blogMsgId == currentClickMsgId && data[0].comment.length!=0){
+      for(var i = 0;i<data[0].comment.length;i++){
+        uiItemList(data, i)
       }
     }
   }
   //ui模板
-  function uiItemList(data, i,j) {
-    var name = data[i].blog.userName;
+  function uiItemList(data, i) {
+    var name = data[0].blog.userName;
     console.log(name)
-    var msg = JSON.parse(data[i].comment[j].msgContent).text.msg;
-    var node = '<div class="commentList" id ="'+data[i].comment[j].blogMsgId+'">';
+    var msg = JSON.parse(data[0].comment[i].msgContent).text.msg;
+    var node = '<div class="commentList" id ="'+data[0].comment[i].blogMsgId+'">';
     node += ' <div class="infoImage">';
     node += '   <img src="./images/timg.jpg" alt="">';
     node += ' </div>';
     node += ' <div class="infoContent">';
     node += '   <div class="infoName">';
-    node += '     <span class="userName"> '+ data[i].blog.userName +'</span>';
+    node += '     <span class="userName"> '+ data[0].blog.userName +'</span>';
     node += '     <span class="praise">';
     node += '       <img src="./images/pic1.png" alt="" class="praiseImg"> <span class="praiseNum">0</span>';
     node += '     </span>';
