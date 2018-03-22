@@ -361,11 +361,12 @@ function pageIndeLoad(data) {
 
   //公共ui模板
   function commentUi(data) {
+
     var html = "";
     for (var i = 0; i < data.length; i++) {
       if(data[i].blog != null){
       html += '<li class="ul_content_active_content" msg="' + data[i].blog.msgId + '">' +
-        '<p class="infoNameMyPage"><img src="./images/1.jpg"><span>云淡风轻</span></p>' +
+        '<p class="infoNameMyPage"><img src="./images/1.jpg"><span>'+ data[i].blog.userName +'</span></p>' +
         '<div class="active_title">' + JSON.parse(data[i].blog.msgContent).text.title + '</div>' +
         // '<div class="active_article">' + JSON.parse(data[i].blog.msgContent).text.msg + '</div>' +
         '<div class="active_img">' +
@@ -520,18 +521,6 @@ function pageIndeLoad(data) {
     e.stopImmediatePropagation();
     $.router.load('./myPage.html');
   });
-  
-  //将时间戳转为时间
-  function timestampToTime(timestamp) {
-        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-        Y = date.getFullYear() + '-';
-        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-        D = date.getDate() + ' ';
-        h = date.getHours() + ':';
-        m = date.getMinutes() + ':';
-        s = date.getSeconds();
-        return Y+M+D+h+m+s;
-    }
 
     
 
@@ -546,39 +535,11 @@ function pageIndeLoad(data) {
       data: '{ "msgId":"' + currentClickMsgId + '","imId":"' + selfImId + '"}',
       contentType: "application/json;charset=utf-8",
       success: function (res) {
-        console.log(res)
         if (res.code == 200) {
-          var header = '<a class="button button-link button-nav pull-left getBackToPage" href="javascript:history.go(-1);">'+
-            '<span style="padding-left: 10px">'+
-              '<img src="./images/leftBack.png" alt="" style="width:10px;margin-top:14px;">'+
-            '</span>'+
-          '</a>'+
-          '<a href="./myPage.html" class="button button-link button-nav name-center" style="width: 30%;margin-left: 25%;">'+
-            '<img src="./images/timg.jpg">'+
-            '<span class="button-name">'+ res.data[0].blog.userName +'</span>'+
-          '</a>'+
-          '<span class="guanzhu">关注</span>'
-         // var timestampToTime = timestampToTime(res.data[0].blog.createTime);  
-          var text = '<div class="content" id="detailContent">' +
-            '<h3>' + JSON.parse(res.data[0].blog.msgContent).text.title + '</h3>' +
-            '<div class="detailInfo">' +
-            '<span class="time">'+ timestampToTime(1403058804) +'</span>' +
-            '<a href="#">'+ res.data[0].blog.userName +'</a>' +
-            //'<span class="readNum">阅读4524</span>' +
-            '</div>' +
-            '<div class="picture">' +
-            '<img src="' + JSON.parse(res.data[0].blog.msgContent).picture[0].pictureUrl + '" alt="" style="width:100%;height:170px;">' +
-            '</div>' +
-            '<div class="article">' +
-            '<p>' + JSON.parse(res.data[0].blog.msgContent).text.msg + '</p>' +
-            '  </div>'+
-            '  </div>'+
-            '</div>'
-        }
-        
-        var text = text.replace(/<img src='..\/..\/images\/addImg.png'>/g,"<p></p>");
-        $("#details .bar-nav").html(header);
-        $("#detailContent").html(text);
+            $.showIndicator();
+            renderDetailHtml(res);
+        } 
+       
       },
       error: function (msg) {
         $.toast("网络错误");
