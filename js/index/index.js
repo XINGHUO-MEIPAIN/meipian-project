@@ -52,6 +52,7 @@ function pageIndeLoad(data) {
   //开启上拉刷新  下拉加载更多
   function openUpAndDown() {
     topRefreshTab1();
+    bottomloadMoreTab1();
     downReshTab2();
   }
   //定义内容区
@@ -95,6 +96,13 @@ function pageIndeLoad(data) {
     isOpenBorside = 0;
   }
 
+  $('#tabflag1').click(function () {
+    tab1Click();
+  });
+  $('#tabflag2').click(function () {
+    tab2Click();
+  })
+
   //初始化请求参数
   function initParam() {
     parmaData = {}
@@ -108,8 +116,8 @@ function pageIndeLoad(data) {
 
   //获取登录信息
   var pramAjaxInfo = {};
-  pramAjaxInfo.targetImId = selfImId,
-    pramAjaxInfo.imId = "442000198204228833",
+  pramAjaxInfo.targetImId = "442000198204228833",
+    pramAjaxInfo.imId = selfImId,
     $.ajax({
       url: postUrl + "/getUserInfo",
       type: 'post',
@@ -146,7 +154,7 @@ function pageIndeLoad(data) {
           }
         }
         if (res.data.length > 10) {
-          bottomloadMoreTab1();
+          
         } else {
           return;
         }
@@ -278,21 +286,18 @@ function pageIndeLoad(data) {
     //开启加载指示器
     $.showIndicator();
     var paramDatad = {};
-    paramDatad.id = 1;
-    paramDatad.tokenStr = "e6f5f17534f74db89c1048f4d3888888";
+    paramDatad.randomNum = 10;
     $.ajax({
-     url: contactServecesUrl+"/user/getOrgUserByOrgId",
-     //url: contactServecesUrl+"/user/getOrgUser",
+     url: contactServecesUrl+"/user/getRandomUsers",
       type: "POST",
       data: JSON.stringify(paramDatad),
       contentType: "application/json;charset=utf-8",
       success: function (res) {
-        console.log(res)
         $.hideIndicator();
         if (res.code == 200) {
           //清空列表
           $(".contentBlock").html("");
-          attentionInitUi(res.data.orgList);
+          attentionInitUi(res.data);
           //是否有回调
           if (!!callBack) {
             callBack();
@@ -395,14 +400,13 @@ function pageIndeLoad(data) {
       '</div>' +
       '<div class="personnelList">'
     for (var i = 0; i < data.length; i++) {
-     
       html += '<div class="personnel">' +
         '<div class="headPortrait"> i' +
         // '<img src="./images/5.jpg" alt="">' +
         '</div>' +
         '<div class="personnelInfo">' +
-        '<div class="personnelName">'+ data[i].name +'</div>' +
-        '<div class="profession">美篇摄影学</div>' +
+        '<div class="personnelName">'+ data[i].userName +'</div>' +
+        '<div class="profession">'+ data[i].rank +'</div>' +
         '</div>' +
         '<div class="attentionBtn">' +
         '<a href="#">关注</a>' +
@@ -521,7 +525,6 @@ function pageIndeLoad(data) {
   $(".company_main_cover").on("click", ".ul_content_active_content", function () {
     $.router.load('/details.html');
     var msg = $(this).attr("msg");
-    console.log(msg)
     // $.ajax({
     //   url: postUrl + '/getBlogInfo',
     //   type: "POST",
@@ -563,13 +566,6 @@ function pageIndeLoad(data) {
     //   }
     // });
   });
-
-  $('#tabflag1').click(function () {
-    tab1Click();
-  });
-  $('#tabflag2').click(function () {
-    tab2Click();
-  })
 
   if (!isResultPage) {
     return;
