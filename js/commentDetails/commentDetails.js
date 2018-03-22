@@ -308,3 +308,5 @@ function pageCommentDetails() {
     $('.content').scrollTop(0);
   });
 }
+
+

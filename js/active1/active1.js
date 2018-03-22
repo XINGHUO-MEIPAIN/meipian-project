@@ -9,11 +9,6 @@ var localImage;
 var modelImg = "../../images/addImg.png";
 var modeltext = '<span>点击添加文字</span>';
 
-
-pdf -> img
-
-
-
 //创建添加图片文字框
 var addNewChoose = '<div class="imgContent">'+
                        '<img src="../../images/write.png" onclick="addWrite(this)">'+
@@ -155,6 +150,7 @@ function addPic(this_){
 
 //点击完成，发送ajax
 function activeComplete(){   
+
       if($(".my_img img").length == 0 || $(".title_text").text() == '点击设置标题'){
           $.toast("请设置标题和封面");
           return;
@@ -174,12 +170,13 @@ function activeComplete(){
       var imgBase64Data  = $(".my_img img").attr("src");
       var pos = imgBase64Data.indexOf("4")+2;
       var base64 = imgBase64Data.substring(pos, imgBase64Data.length - pos);//去掉Base64:开头的标识字符
-     
+
       $.ajax({
         url:"/changeBase64",
         type: "POST",
         data: {
           base64:base64,
+          imid:selfImId
         },
         success: function (res) {
               $(".my_img").find("img").attr("src",res.data)

@@ -7,7 +7,7 @@ function details(){
     });
     $('.guanzhu').click(function(){
       $(this).remove();
-      $.toast('¹Ø×¢³É¹¦');
+      $.toast('å…³æ³¨æˆåŠŸ');
     })
 }
 

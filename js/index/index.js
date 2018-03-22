@@ -338,7 +338,7 @@ function pageIndeLoad(data) {
 
   //关注的通讯录列表
 
-
+   
   //轮播ui模板
   function initLunboUI(data) {
     var html = '';
@@ -521,50 +521,65 @@ function pageIndeLoad(data) {
     $.router.load('./myPage.html');
   });
 
+
+  //将时间戳转为时间
+  function timestampToTime(timestamp) {
+        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        D = date.getDate() + ' ';
+        h = date.getHours() + ':';
+        m = date.getMinutes() + ':';
+        s = date.getSeconds();
+        return Y+M+D+h+m+s;
+    }
+
+
   //点击跳转到详情
   $(".company_main_cover").on("click", ".ul_content_active_content", function () {
     $.router.load('/details.html');
     var msg = $(this).attr("msg");
-    // $.ajax({
-    //   url: postUrl + '/getBlogInfo',
-    //   type: "POST",
-    //   data: '{ "msgId":"' + msg + '","imId":"' + selfImId + '"}',
-    //   contentType: "application/json;charset=utf-8",
-    //   success: function (res) {
-    //     if (res.code == 200) {
-    //       //alert(JSON.parse(res.data[0].blog.msgContent).text.title)
-    //       var text = '<header class="bar bar-nav">' +
-    //         '<a class="button button-link button-nav pull-left getBackToPage" href="javascript:history.go(-1);">' +
-    //         '<span style="padding-left: 10px">' +
-    //         '<img src="./images/leftBack.png" alt="" style="width:10px;margin-top:14px;">' +
-    //         '</span>' +
-    //         '</a>' +
-    //         '<a href="./myPage.html" class="button button-link button-nav name-center" style="width: 30%;margin-left: 25%;">' +
-    //         '<img src="./images/timg.jpg">' +
-    //         '<span class="button-name">云淡风轻</span>' +
-    //         '</a>' +
-    //         '<span class="guanzhu">关注</span>' +
-    //         '</header>' +
-    //         '<div class="content" id="detailContent">' +
-    //         '<h3>' + JSON.parse(res.data[0].blog.msgContent).text.title + '</h3>' +
-    //         '<div class="detailInfo">' +
-    //         '<span class="time">2018.03.27</span>' +
-    //         '<a href="#">云淡风轻</a>' +
-    //         '<span class="readNum">阅读4524</span>' +
-    //         '</div>' +
-    //         '<div class="picture">' +
-    //         '<img src="' + JSON.parse(res.data[0].blog.msgContent).picture[0].pictureUrl + '" alt="" style="width:100%;height:170px;">' +
-    //         '</div>' +
-    //         '<div class="article">' +
-    //         '<p>' + JSON.parse(res.data[0].blog.msgContent).text.msg + '</p>' +
-    //         '</div>'
-    //     }
-    //     // $(".data").html(text);
-    //   },
-    //   error: function (msg) {
-    //     $.toast("网络错误");
-    //   }
-    // });
+    $.ajax({
+      url: postUrl + '/getBlogInfo',
+      type: "POST",
+      data: '{ "msgId":"' + msg + '","imId":"' + selfImId + '"}',
+      contentType: "application/json;charset=utf-8",
+      success: function (res) {
+        if (res.code == 200) {
+          var header = '<a class="button button-link button-nav pull-left getBackToPage" href="javascript:history.go(-1);">'+
+            '<span style="padding-left: 10px">'+
+              '<img src="./images/leftBack.png" alt="" style="width:10px;margin-top:14px;">'+
+            '</span>'+
+          '</a>'+
+          '<a href="./myPage.html" class="button button-link button-nav name-center" style="width: 30%;margin-left: 25%;">'+
+            '<img src="./images/timg.jpg">'+
+            '<span class="button-name">'+ res.data[0].blog.userName +'</span>'+
+          '</a>'+
+          '<span class="guanzhu">关注</span>'
+         // var timestampToTime = timestampToTime(res.data[0].blog.createTime);  
+          var text = '<div class="content" id="detailContent">' +
+            '<h3>' + JSON.parse(res.data[0].blog.msgContent).text.title + '</h3>' +
+            '<div class="detailInfo">' +
+            '<span class="time">'+ timestampToTime(1403058804) +'</span>' +
+            '<a href="#">'+ res.data[0].blog.userName +'</a>' +
+            //'<span class="readNum">阅读4524</span>' +
+            '</div>' +
+            '<div class="picture">' +
+            '<img src="' + JSON.parse(res.data[0].blog.msgContent).picture[0].pictureUrl + '" alt="" style="width:100%;height:170px;">' +
+            '</div>' +
+            '<div class="article">' +
+            '<p>' + JSON.parse(res.data[0].blog.msgContent).text.msg + '</p>' +
+            '</div>'
+        }
+        
+        var text = text.replace(/<img src='..\/..\/images\/addImg.png'>/g,"<p></p>");
+        $("#details .bar-nav").html(header);
+        $("#detailContent").html(text);
+      },
+      error: function (msg) {
+        $.toast("网络错误");
+      }
+    });
   });
 
   if (!isResultPage) {
