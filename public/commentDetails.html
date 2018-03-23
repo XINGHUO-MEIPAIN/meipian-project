@@ -1,0 +1,34 @@
+<div class="page-group">
+  <div class="page" id="commentDetails">
+    <header class="bar bar-nav" style="background:#fff">
+      <a class="button button-link button-nav pull-left getBackToPage" href="javascript:history.go(-1);" id="goBack">
+        <span style="padding-left: 10px">
+          <img src="./images/blakLeft.png" alt="" style="width:18px;margin-top:10px;">
+        </span>
+      </a>
+      <h1 class="title commentNum" style="line-height:2.5rem;color:#333;"> </h1>
+    </header>
+    <div class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100"
+      id="commentContent">
+      <!-- 默认的下拉刷新层 -->
+      <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <div class="uiContentList" id="uiContentList">
+          <!-- 模版渲染 -->
+      </div>
+      <div id="noMore">
+        暂无更多回复
+      </div>
+    </div>
+    <nav class="bar bar-tab">
+      <input type="text" placeholder="写下你的感受..." id="commentText">
+      <a href="#" class="sendConmment">发送</a>
+    </nav>
+     <!-- 回到顶部按钮 -->
+     <a class="topBackComent" id="topBackComent">
+      <img src="./images/topBack.png" alt="">
+    </a>
+  </div>
+</div>

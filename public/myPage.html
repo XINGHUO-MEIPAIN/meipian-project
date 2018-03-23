@@ -1,0 +1,108 @@
+<div class="page-group">
+  <div class="page" id="myPage">
+    <!-- 隐藏顶部通栏 -->
+    <div class="topbarShowOrHide" style="position:fixed;top:0px">
+      <a class=" button-nav pull-left getBackToPage" href="javascript:history.go(-1)">
+        <span style="padding-left:20px;width: 0.5rem;height:1.3rem;padding-top: 0.4rem;margin-top:6px">
+          <img src="./images/blakLeft.png" alt="" style="width: 1rem;height:1.3rem;padding-top: 0.4rem;margin-top:10px">
+        </span>
+      </a>
+    </div>
+    <div class="content pull-to-refresh-content" id="content">
+      <!-- 默认的下拉刷新层 -->
+      <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <header class="info">
+        <div class="topbar">
+          <a class="button-link button-nav pull-left getBackToPage" href="javascript:history.go(-1);">
+            <span style="padding-left: 20px">
+              <img src="./images/leftBack.png" alt="" style="width:9px;margin-top:16px;">
+            </span>
+          </a>
+        </div>
+        <div class="topContent">
+          <span style="padding-left: 20px">
+            <img src="./images/info.png" alt="" style="width: 3rem;height:3rem;padding-top: 0.4rem;margin-top:10px;flex:1">
+          </span>
+          <div class="userInfo">
+            <div class="userName" style="font-size:16px" id="userName">美篇用户</div>
+            <div class="loginState" id="loginState">未登录</div>
+          </div>
+        </div>
+        <div class="topBase">
+          <span class="attention">关注 &nbsp;<span class="attentionNum">0</span></span>
+          <span>|</span>
+          <span class="fass">粉丝 &nbsp;<span class="fassNum">0</span></span>
+        </div>
+      </header>
+      <div class="contentMe">
+        <!-- <div class="myProduct">
+          <div class="productList">
+            <img src="./images/05.png" alt="">
+            <div>我的收藏</div>
+          </div>
+          <div class="productList">
+            <img src="./images/06.png" alt="">
+            <div>我的钱包</div>
+          </div>
+          <div class="productList">
+            <img src="./images/07.png" alt="">
+            <div>我的美篇书</div>
+          </div>
+          <div class="productList">
+            <img src="./images/08.png" alt="">
+            <div>访问统计</div>
+          </div>
+        </div> -->
+        <div class="totalTitle">
+          <a class="pull-left ">全部文章</a>
+          <!-- <span class="pull-right">
+            <img src="./images/file.png" alt="" style="width:20px">
+          </span> -->
+        </div>
+        <div class="myPageContent" id="myPageContent">
+          <!-- <div class="titleList">
+            <div class="titleName">
+              <span class="sign">样例</span>
+              <span>我在微信有了自己的专栏!</span>
+            </div>
+            <img src="./images/timg.jpg" alt="">
+            <span class="time">2017-04-28</span>
+          </div>
+          <div class="titleList">
+            <div class="titleName">
+              <span class="sign">样例</span>
+              <span>我在微信有了自己的专栏!</span>
+            </div>
+            <img src="./images/timg.jpg" alt="">
+            <span class="time">2017-04-28</span>
+          </div>
+          <div class="titleList">
+            <div class="titleName">
+              <span class="sign">样例</span>
+              <span>我在微信有了自己的专栏!</span>
+            </div>
+            <img src="./images/timg.jpg" alt="">
+            <span class="time">2017-04-28</span>
+          </div> -->
+       </div>
+      </div>
+    </div>
+    <!-- <nav class="bar bar-tab">
+      <a class="tab-item external " href="javascript:history.go(-1);">
+        <span class="icon icon-home"></span>
+        <span class="tab-label">发现</span>
+      </a>
+      <a class="tab-item external" href="#">
+        <span class="icon icon-star"></span>
+        <span class="tab-label">收藏</span>
+      </a>
+      <a class="tab-item external active" onclick="myPage()">
+        <span class="icon icon-me"></span>
+        <span class="tab-label">我的</span>
+      </a>
+    </nav> -->
+  </div>
+</div>

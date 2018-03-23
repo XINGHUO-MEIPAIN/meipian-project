@@ -1,0 +1,24 @@
+#yinPingContent{
+  width: 100%;
+}
+#yinPingContent .bookList{
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  padding: 15px;
+  background-color: #fff;
+}
+.bookList .image >img{
+  width: 100%;
+  height: 180px;
+}
+.bookList .discounts span{
+  font-size: 14px;
+  color: #636867;
+  margin-right: 10px;
+}
+.bookList .discounts a{
+  font-size: 14px;
+}
+.bookList >h4{
+  font-weight: 400;
+}

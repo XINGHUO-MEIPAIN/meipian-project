@@ -1,0 +1,74 @@
+<div class="page-group">
+  <div class="page" id="allComments">
+    <header class="bar bar-nav" style="background:#fff">
+      <a class="button button-link button-nav pull-left getBackToPage" href="javascript:history.go(-1);" id="goBack2">
+        <span style="padding-left: 10px">
+          <img src="./images/blakLeft.png" alt="" style="width:18px;margin-top:10px;">
+        </span>
+      </a>
+      <h1 class="title" style="line-height:2.5rem;color:#333;">10条评论</h1>
+    </header>
+    <div class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100"
+      id="allCommentContent">
+      <!-- 默认的下拉刷新层 -->
+      <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <div class="uiContentListAll" id="uiContentListAll">
+        <div class="commentMain" id="commentMain">
+          <!-- <div class="commentList">
+            <div class="infoImage">
+              <img src="./images/timg.jpg" alt="">
+            </div>
+            <div class="infoContent">
+              <div class="infoName">
+                <span class="userName">晓歌</span>
+                <span class="praise">
+                  <img src="./images/pic1.png" alt="" class="praiseImg">
+                  <span class="praiseNum">0</span>
+                </span>
+              </div>
+              <div class="infoContentText">
+                人生如减法,生活要简单.人生如减法,生活要简单. 人生如减法,生活要简单.人生如减法,生活要简单. 人生如减法,生活要简单.
+              </div>
+              <div class="infoTime">
+                7分钟前
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <div class="replyContent" id="replyContent">
+          <!-- <div class="replyList">
+            <div class="infoImage">
+              <img src="./images/22.jpg" alt="">
+            </div>
+            <div class="infoContent">
+              <div class="infoNameReply">
+                <span class="userName">冰心</span>
+              </div>
+              <div class="replyText">
+                主要是赶巧,本人写幽默段子写多了,在这点评换换口味,承蒙各位美友抬举,谢谢.
+              </div>
+              <div class="infoTime">
+                7分钟前
+              </div>
+            </div>
+          </div> -->
+        </div>
+
+      </div>
+      <!-- 加载提示符 -->
+      <div class="infinite-scroll-preloader">
+        <div class="preloader"></div>
+      </div>
+      <div id="noMore">
+        暂无更多回复
+      </div>
+    </div>
+    <nav class="bar bar-tab">
+      <input type="text" placeholder="写下你的感受..." id="commentTextAll">
+      <a href="#" class="sendConmmentAll">发送</a>
+    </nav>
+  </div>
+</div>

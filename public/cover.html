@@ -1,0 +1,107 @@
+
+  <div class="page-group">
+     <div class="page page-current" id="cover">
+        <div class="editor">
+           <a class="back"><div class="back">返回</div></a>
+           <div class="editor_text">编辑封面</div>
+           <div class="complete" onclick="coverComplete()">完成</div>
+        </div>
+
+      <!--   <div class="editor_1">
+          
+        </div>
+           -->
+     <div class="hideMask">
+        <canvas id="c1"></canvas> 
+     </div>
+     <a href="#" class="button pageXg button-big button-fill button-success" onclick="clipImage()" style="background: linear-gradient(to bottom, #56d0ea , rgb(8, 148, 236));width: 10rem; margin: 1rem auto; ">打印成封面效果</a>
+     
+         <div class="mark1"></div>
+         <div class="mark" id="mark"></div>
+         <div class="mark2"></div>
+         <canvas id="c3"></canvas> 
+   
+      <div class="change_page" onclick="changeBg()">更换封面</div>
+     </div>
+
+  <script type="text/javascript">
+   //获取本地图片的地址
+   var titleImage;
+   function uploadFileResult(objs){
+    if(objs==null||typeof(objs)=="undefined"||objs.length==0){
+
+    }else{ 
+        titleImage = "data:image/jpeg;base64,"+objs[0].fileBase64;
+        clip(titleImage);
+        sessionStorage.setItem("titleImage",titleImage);
+     };
+   };
+  
+   function clip(titleImage) {
+      var canvas1 = document.getElementById("c1");
+      var oMark = document.getElementById("mark");
+      var canvas3= document.getElementById("c3");
+      canvas1.height = 300;
+      canvas1.width=360;
+
+      var cxt1 = canvas1.getContext("2d");
+      var img = new Image();
+      img.src = titleImage;
+      var srcX = 0;
+      var srcY = oMark.offsetTop - canvas1.getBoundingClientRect().top;
+      var sWidth = oMark.offsetWidth;
+      var sHeight = oMark.offsetHeight;
+     
+    var canvas2 = document.createElement("canvas");
+    var cxt2=canvas2.getContext("2d");
+    img.onload = function(){
+        cxt1.drawImage(img,0,0,canvas1.width,canvas1.height);
+        var dataImg = cxt1.getImageData(srcX,srcY,sWidth,sHeight)
+        canvas2.width = sWidth;
+        canvas2.height = sHeight;
+        cxt2.putImageData(dataImg,0,0,0,0,canvas2.width,canvas2.height)
+        var img2 = canvas2.toDataURL("image/png");
+        var cxt3=canvas3.getContext("2d");
+        img3 = new Image();
+        img3.src = img2;
+        img3.onload  = function(){
+            cxt3.drawImage(img3,0,0,canvas3.width,canvas3.height);
+        }
+    };
+   }
+
+
+   function coverComplete() {  
+      $.router.load("./active1.html");
+      $(".my_img").html("<img src='"+img3.src+"'>");  
+      $(".my_img img").css("width",$(window).width()+'px')
+   };
+   
+
+      var start,end,dis;
+      $(document).on("touchstart",".mark",function(e){
+            _x_start=e.touches[0].pageX;
+            _y_start=e.touches[0].pageY;
+            top_start=$("#c1").css("top");
+        });
+
+       $(document).on("touchmove",".mark",function(e){
+            _x_move=e.touches[0].pageX;
+            _y_move=e.touches[0].pageY;
+            // console.log("move",_x_move)
+            var top = parseFloat($("#c1").css("top"));
+          
+            var maskHeight = parseFloat($(".mark1").height());
+            var maskHeight1 = parseFloat($(".mark2").height());
+
+            $("#c1").css("top",parseFloat(_y_move)-parseFloat(_y_start)+parseFloat(top_start)+"px");
+             
+        })
+        
+        function clipImage(){             
+             clip(titleImage);               
+        }
+      
+
+    </script>
+  </div>

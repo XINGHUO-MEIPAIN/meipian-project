@@ -1,0 +1,123 @@
+#allComments .content {
+  padding-bottom: 60px;
+  background-color: #fff;
+}
+#allComments .replyContent{
+  background: #f4f7f7;
+  padding-left: 15px;
+}
+
+#allComments #noMore {
+  text-align: center;
+  display: none;
+  font-size: 14px;
+}
+
+#allComments .replyList{
+  display: flex;
+  padding: 15px 15px 15px 0px;
+}
+
+#allComments .commentList {
+  display: flex;
+  padding: 15px 15px 15px 15px;
+}
+
+#allComments .replyList{
+  border-bottom: 1px solid #eee;
+}
+
+#allComments .replyList .infoImage,
+#allComments .commentList .infoImage {
+  margin-right: 10px;
+}
+#allComments .infoContentText{
+  line-height: 20px;
+}
+
+#allComments .replyList .infoContent,
+#allComments .commentList .infoContent {
+  width: 90%;
+}
+
+#allComments .replyList .infoImage img,
+#allComments .commentList .infoImage img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+#allComments .replyList .infoNameReply,
+#allComments .commentList .infoName {
+  margin-bottom: 10px;
+}
+
+#allComments .replyList .infoNameReply .userName,
+#allComments .commentList .infoName .userName {
+  font-size: 10px;
+  color: #9b9b9b;
+}
+
+#allComments .infoNameReply .praise,
+#allComments .infoName .praise {
+  float: right;
+}
+
+#allComments .infoNameReply .praise img,
+#allComments .infoName .praise img {
+  width: 15px;
+}
+
+#allComments .replyList .infoContent,
+#allComments .commentList .infoContent {
+  width: 95%;
+  font-size: 14px;
+}
+
+#allComments .replyList .infoTime,
+#allComments .commentList .infoTime {
+  font-size: 10px;
+  margin-top: 15px;
+  color: #9b9b9b;
+}
+
+#allComments .bar {
+  background-color: #fff;
+}
+
+#allComments .infoContentReply {
+  background: #f4f7f7;
+  margin-top: 15px;
+  padding: 10px;
+  font-size: 12px;
+}
+
+#allComments .bar>input {
+  width: 80%;
+  height: 35px;
+  border: none;
+  background-color: #eee;
+  margin: 7px 10px 7px 10px;
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+#allComments .bar a {
+  font-size: 14px;
+  color: #333;
+}
+
+.thumb_active {
+  color: orange;
+}
+.readText{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+}
+.input_active{
+  color: #333 !important;
+}

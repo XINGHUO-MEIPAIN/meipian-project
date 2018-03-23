@@ -1,0 +1,70 @@
+#details{
+  background: #f2e8ca;
+  overflow: scroll;
+}
+#detailContent{
+  padding: 10px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  position: relative!important;
+}
+#detailContent h3{
+  margin-bottom: 13px;
+  color: #653000;
+}
+#detailContent .detailInfo{
+  margin-bottom: 13px;
+}
+#detailContent .detailInfo .time{
+  color: #a87541;
+  margin-right: 8px;
+}
+#detailContent .detailInfo >a{
+  color: #748f91;
+  margin-right: 8px;
+}
+#detailContent .detailInfo .readNum{
+  color: #a87541;
+}
+#detailContent .sign{
+  margin-bottom:20px;
+}
+#detailContent .sginF,
+#detailContent .sginE{
+  border: 1px solid  #a87541;
+  padding: 2px 6px 2px 6px;
+  border-radius: 3px;
+}
+#detailContent .music{
+  width: 90%;
+  height: 40px;
+  line-height: 40px;
+  background-color: #e0d1b3;
+  padding-left: 10px;
+  margin-bottom: 25px;
+}
+
+#detailContent .picture{
+  width: 100%;
+  height: 180px;
+  padding: 5px;
+  background-color: #fff;
+  box-shadow: 1px 1px 2px #333;
+}
+.article img {
+  width: 100%;
+  padding: 5px;
+  background-color: #fff;
+  box-shadow: 1px 1px 2px #333;
+}
+.bar >input{
+  width: 50%;
+  height: 35px;
+  border: none;
+  background-color: #eee;
+  margin: 7px 20px 7px 10px;
+  padding: 5px;
+  color: #757575;
+  font-size: 14px;
+  border-radius: 5px;
+}

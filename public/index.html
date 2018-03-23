@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
+  <title>美篇</title>
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/sm.min.css">
+  <link rel="stylesheet" href="./css/meipian.css">
+  <link rel="stylesheet" href="./swiper/css/swiper.min.css">
+  <link rel="stylesheet" href="./css/myPage/myPage.css">
+  <link rel="stylesheet" href="./css/details/details.css">
+  <link rel="stylesheet" href="./css/specialList/specialList.css">
+  <link rel="stylesheet" href="./css/topicDetails/topicDetails.css">
+  <link rel="stylesheet" href="./css/findHoby/findHoby.css">
+  <link rel="stylesheet" href="./css/rankingList/rankingList.css">
+  <link rel="stylesheet" href="./css/meipianYP/meipianYP.css">
+  <link rel="stylesheet" href="./css/commentDetails/commentDetails.css">
+  <link rel="stylesheet" href="./css/allComments/allComments.css">
+</head>
+<style>
+  .swiper-container {
+    width: 100%;
+    height: 100px;
+  }
+</style>
+
+<body>
+  <div class="page-group">
+    <div class="page" id="index" style="background-color: white;">
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left getBackToPage">
+          <span style="padding-left: 10px;">
+            美篇
+          </span>
+        </a>
+        <a class="button button-link button-nav pull-right" onclick="report()">
+          <span style="padding-right: 10px">
+            发布
+          </span>
+        </a>
+      </header>
+      <div class="content">
+        <!-- 导航栏 -->
+        <div class="tabShowList" style="position:fixed">
+          <div class="tabShow">
+            <ul class="buttons-tab " id='indexTab'>
+              <li>
+                <a href="#tab1" id="tabflag1" class="tab-link active button">热点</a>
+              </li>
+              <li>
+                <a href="#tab2" id="tabflag2" class="tab-link button">关注</a>
+              </li>
+              <li>
+                <a href="#tab3" id="tabflag3" class="tab-link button">我的</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="content-block" id="content-block" style="margin: 0;padding: 0; margin-top: 40px;">
+          <div class="tabs">
+            <div id="tab1" class="tab active">
+              <div class="content-block" style="margin: 0;padding: 0" id="content_block_tab">
+                <div class="company_main pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100"
+                  id="tab1Content" style="overflow: visible;">
+                  <div class="pull-to-refresh-layer" style="position:absolute;top:-34px;">
+                    <div class="preloader"></div>
+                    <div class="pull-to-refresh-arrow"></div>
+                  </div>
+                  <ul class="company_main_cover" id="cardContent">
+                    <!-- 模板渲染 -->
+                  </ul>
+                  <div class="infinite-scroll-preloader" id="preloader_tab2" style="display: flex;justify-content: center;">
+                    <div class="preloader" id="loadMoreloding"></div>
+                    <div id="noMore" style="margin-top:10px;">
+                      <a onclick="clickLoadMore()">没有更多了</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="tab2" class="tab">
+              <div class="content-block pull-to-refresh-content" data-ptr-distance="55" style="margin: 0;padding: 0" id="tab2Content">
+                <div class="pull-to-refresh-layer" style="position: absolute;top: -34px;">
+                    <div class="preloader"></div>
+                    <div class="pull-to-refresh-arrow"></div>
+                </div>
+                <div class="contentBlock">
+                    <div class="inform">
+                      <span>
+                        <img src="./images/touxiang.jpg" alt=""> 关注别人,第一时间得到他们的专栏更新
+                      </span>
+                    </div>
+                    <!-- <div class="personnelList">
+                      <div class="personnel">
+                        <div class="headPortrait">
+                          <img src="./images/5.jpg" alt="">
+                        </div>
+                        <div class="personnelInfo">
+                          <div class="personnelName">
+                            冬天无雪
+                          </div>
+                          <div class="profession">
+                            美篇摄影学
+                          </div>
+                        </div>
+                        <div class="attentionBtn">
+                          <a href="#">关注</a>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+              </div>
+          
+            </div>
+            <div id="tab3" class="tab">
+              <!-- <div class="tab3contentBlock" id="myPageInfo">
+                <div class="info">
+                  <div class="topContent">
+                    <span style="padding-left: 20px">
+                      <img src="./images/info.png" alt="" style="width: 3rem;height:3rem;padding-top: 0.4rem;margin-top:10px;flex:1">
+                    </span>
+                    <div class="userInfo">
+                      <div class="userName" style="font-size:16px" id="myInfoName">美篇用户</div>
+                      <div class="loginState" id="myloginState">未登录</div>
+                    </div>
+                  </div>
+                  <div class="topBase">
+                    <span class="attention">关注 &nbsp;0</span>
+                    <span>|</span>
+                    <span class="fass">粉丝 &nbsp;0</span>
+                  </div>
+                </div>
+                <div class="totalTitle">
+                  <a class="pull-left ">全部文章</a>
+                </div>
+              </div> -->
+              <!-- <div class="contentMe">
+                <div class="myPageInitContent" id="myPageInitContent">
+                  <div class="titleList">
+                    <div class="titleName">
+                      <span class="sign">样例</span>
+                      <span>我在微信有了自己的专栏!</span>
+                    </div>
+                    <img src="./images/timg.jpg" alt="">
+                    <span class="time">2017-04-28</span>
+                  </div>
+                  <div class="titleList">
+                    <div class="titleName">
+                      <span class="sign">样例</span>
+                      <span>我在微信有了自己的专栏!</span>
+                    </div>
+                    <img src="./images/timg.jpg" alt="">
+                    <span class="time">2017-04-28</span>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div id="tab4" class="tab">
+            <div class="icon"></div>
+          </div>
+          <div id="tab5" class="tab">
+
+          </div>
+          <div id="tab6" class="tab">
+
+          </div>
+        </div>
+        <!-- 回到顶部按钮 -->
+        <a class="topBack" id="topBack">
+          <img src="./images/topBack.png" alt="">
+        </a>
+      </div>
+    </div>
+  </div>
+  <script src='./js/zepto.min.js' charset='utf-8'></script>
+  <script src='./js/sm.min.js' charset='utf-8'></script>
+  <script src="./js/total.js"></script>
+  <script src="./js/index/index.js" charset='utf-8'></script>
+  <script src="./swiper/js/swiper.min.js"></script>
+  <script src="./js/myPage/myPage.js" charset='utf-8'></script>
+  <script src="./js/specialList/specialList.js" charset='utf-8'></script>
+  <script src="./js/topicDetails/topicDetails.js" charset='utf-8'></script>
+  <script src="./js/findHoby/findHoby.js" charset='utf-8'></script>
+  <script src="./js/rankingList/rankingList.js" charset='utf-8'></script>
+  <script src="./js/touchslider.js"></script>
+  <script src="./js/commentDetails/commentDetails.js"></script>
+  <script src="./js/allComments/allComments.js"></script>
+  <script src="./js/details/details.js"></script>
+  <script src="./js/myPage/myPage.js"></script>
+  <script src="./js/active1/active1.js"></script>
+  <script src="./js/face.js"></script>
+  <script type="text/javascript">
+    $.init();
+    var params = 0;
+    pageIndeLoad(params);
+    $(document).on("pageInit", function (e, pageId, $page) {
+      console.log(pageId);
+      isNeedScroll = true;
+      if (pageId == "index") {
+        pageIndeLoad(1);
+      } else if (pageId == "myPage") {
+        myPageInfo();
+      } else if (pageId == "specialList") {
+        TospecialList();
+      } else if (pageId == "topicDetails") {
+        TotopicDetails();
+      } else if (pageId == "hoby") {
+        findHobyInload();
+      } else if (pageId == "rankingList") {
+        rankingList();
+      } else if (pageId == "details") {
+        details()
+      } else if (pageId == "commentDetails") {
+        pageCommentDetails();
+      } else if (pageId == "allComments") {
+        pageAllComments();
+      } else if (pageId == "active1") {
+        active1();
+      } else if (pageId == "cover") {
+        // alert()
+      }
+    });
+  </script>
+</body>
+
+</html>

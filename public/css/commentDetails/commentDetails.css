@@ -1,0 +1,140 @@
+#commentDetails .content {
+  padding-left: 15px;
+  padding-bottom: 60px;
+  background-color: #fff;
+}
+
+#commentDetails #noMore {
+  font-size: 14px;
+  text-align: center;
+  display: none;
+  margin-top: 10px;
+  color: #9b9b9b;
+}
+
+#commentDetails .commentList {
+  display: flex;
+  border-bottom: 1px solid #eee;
+  padding: 15px 15px 15px 0px;
+}
+
+#commentDetails .commentList .infoImage {
+  margin-right: 10px;
+}
+#commentDetails .infoContentText{
+  line-height: 20px;
+}
+#commentDetails .commentList .infoContent {
+  width: 90%;
+}
+
+#commentDetails .commentList .infoImage img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+#commentDetails .commentList .infoName {
+  margin-bottom: 10px;
+}
+#commentDetails .infoContentText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+}
+.infoContentText img{
+  width: 20px;
+}
+#commentDetails .commentList .infoName .userName {
+  font-size: 10px;
+  color: #9b9b9b;
+}
+
+#commentDetails .infoName .praise {
+  float: right;
+}
+
+#commentDetails .infoName .praise img {
+  width: 15px;
+}
+
+#commentDetails .commentList .infoContent {
+  width: 95%;
+  font-size: 14px;
+}
+
+#commentDetails .replyList .infoTime,
+#commentDetails .commentList .infoTime {
+  font-size: 10px;
+  margin-top: 15px;
+  color: #9b9b9b;
+}
+
+#commentDetails .bar {
+  background-color: #fff;
+}
+
+#commentDetails .infoContentReply {
+  background: #f4f7f7;
+  margin-top: 15px;
+  padding: 10px;
+  font-size: 12px;
+}
+
+#commentDetails .replyList .infoNameReply {
+  color: #2d8ff5;
+}
+
+#commentDetails .infoContentReply .replyCount {
+  color: #2d8ff5;
+}
+
+#commentDetails .replyList .replyText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+}
+
+#commentDetails .bar>input {
+  width: 80%;
+  height: 35px;
+  border: none;
+  background-color: #eee;
+  margin: 7px 10px 7px 10px;
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+#commentDetails .bar a {
+  font-size: 14px;
+  color: #333;
+}
+
+.thumb_active {
+  color: orange;
+}
+.readText{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+}
+.topBackComent{
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  right: 20px;
+  bottom: 10%;
+  display: none;
+}
+.topBackComent img{
+  width: 36px;
+  height: 35px;
+  border-radius: 50%;
+}

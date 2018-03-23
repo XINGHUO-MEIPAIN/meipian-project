@@ -1,0 +1,90 @@
+#topicDetailsConetnt {
+  width: 100%;
+  background-color: #fff;
+}
+
+#topicDetailsConetnt .topBar {
+  width: 100%;
+  height: 200px;
+  background: url('../../images/timg2.jpg') no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+}
+#topicDetailsConetnt .topBar .top{
+  width: 100%;
+  height: 50px;
+}
+/* 隐藏顶部通栏 */
+#topicDetails .topShowOrHide{
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  opacity: 0;
+  display: none;
+  z-index: 999;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  line-height: 50px;
+}
+#topicDetailsConetnt .topBar .pictureInfo {
+  position: absolute;
+  left: 20px;
+  bottom: 15px;
+}
+
+.topBar .pictureInfo h4 {
+  color: #fff;
+}
+
+.topBar .pictureInfo .titleNum,
+.topBar .pictureInfo .visitNum {
+  color: #fff;
+  font-size: 12px;
+}
+
+#topicDetailsConetnt >p {
+  padding: 10px;
+  font-size: 14px;
+}
+.contentList {
+  border-top: 0.2rem solid #eee;
+  margin-bottom: 0.3rem;
+  padding: 10px;
+}
+.contentList p img{
+	width: 1.3rem;
+	height: 1.3rem;
+	border-radius: 1.3rem;
+	vertical-align: middle;
+}
+.contentList p span{
+	margin-left: 0.4rem;
+	font-size: 0.75rem;
+	color: #8a8a8a;
+}
+.contentList .active_title{
+	margin:0 0.5rem;
+	font-size: 14px;
+}
+.contentList>p{
+    margin:0.5rem;
+}
+.contentList .active_article{
+	margin:0.5rem;
+	font-size: 0.7rem;
+	color: #8a8a8a;
+}
+.contentList .active_img{
+	height: 7rem;
+	overflow: hidden;
+}
+.contentList .active_img img{
+  width: 100%;
+  height: 140px;
+}
+.contentList .good{
+  margin-top: 15px;
+}

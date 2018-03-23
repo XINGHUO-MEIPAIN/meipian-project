@@ -1,0 +1,250 @@
+.editor{position:fixed;width:100%;z-index:2;background: white;line-height: 2.4rem;height: 2.4rem}
+.back{position: absolute;left: 0.5rem;top: 0; width: 2rem;}
+.editor_text{text-align: center;}
+.complete{position: absolute;right: 0.5rem;top: 0}
+.editor_face{position:relative;color: white;height: 6rem;overflow: hidden;}
+.title_text{color: white;padding:0.5rem 1rem;font-size: 1rem;position: relative;;z-index: 2}
+.editor_page{font-size:0.7rem;color: white;padding:0 0.2rem;border:1px solid white;border-radius: 0.2rem;position: absolute;right: 0.5rem;bottom: 0.5rem;z-index: 2}
+.editor_page a{color: white}
+.add{background:#d4d4d4;margin:0.2rem auto;text-align:center;width: 2rem;height: 1rem;line-height:1rem;border-radius: 0.8rem;color: white;border:1px solid white;}
+.add_content{padding:0 0.5rem}
+.add_content_1_left{float: left;}
+.add_content_1_img{float: left;width: 3rem;height: 3rem;background-size: 100% 100% ;}
+.add_content_1_text{float: left;}
+.add_content_1_img img{width: 3rem;height: 3rem}
+.add_content_1{background: white;border-radius: 0.5rem;padding: 0.5rem}
+.add_content_1_left{line-height: 0.5rem;width:0.8rem;height:0.8rem;font-size: 0.8rem;color: #ccc}
+.add_content_1_text{margin-left: 0.5rem;color: #ccc;width: 69%;height: 3rem}
+.add_type{display:none;line-height:1.3rem;background: white;width: 6rem;height: 1.3rem;margin:0.2rem auto;border-radius: 0.8rem}
+.add_type .add_type_div{float:left;width: 50%;text-align: center;height: 1.3rem;line-height: 1.3rem;font-size: 0.7rem;color:#ccc;}
+.add_type .add_type_div a{color:#ccc;}
+.title_text a{color: white}
+.cover_content{padding-top: 2.4rem;position: absolute;height:100%;overflow: scroll;width: 100% }
+.my_img img{width: 100%;position: absolute;height:100%}
+.my_img {width: 100%;}
+.editor_face{
+	width: 100%
+}
+.page .bar-nav {
+	background: #0894ec;
+}
+.page .bar-nav span{
+	color: #fff;
+}
+/*编辑文字*/
+.complete {
+    position: absolute;
+    right: 0.5rem;
+    top: 0;
+}
+.editor_text {
+    text-align: center;
+}
+.loadding{
+	display: none
+}
+.textarea{
+	position: absolute;
+	border:none;
+	resize: none;
+	height: 100%;
+	width: 100%;
+	border-top: 1px solid #eee;
+	padding: 1%;
+	margin-top: 2.4rem;
+}
+.complete a{
+	color: black
+}
+
+/*设置标题*/
+.editor a{color:black;}
+.editor a span{font-family: serif;margin-right: 0.2rem}
+
+/*更换封面*/
+.change_page{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 2.6rem;
+	text-align: center;
+	line-height: 2.6rem;
+	color: white;
+	background: linear-gradient(to bottom, #56d0ea , rgb(8, 148, 236));
+}
+.editor_1{
+	padding-top: 2.4rem;
+}
+.editor_1 img{
+	width: 100%;
+}
+
+/*发表的文章*/
+.report{
+	background: white
+}
+.movieDetailUl{
+	padding-left: 0
+}
+#bottomText{
+	display: none;
+}
+.my_title{
+	margin:1rem;
+	font-size: 1rem;
+}
+.autor{
+	text-align: center;
+    font-size: 0.8rem;
+    color: #a7a7a7
+}
+em{
+	font-style: normal;
+}
+.autor em{
+	margin:0 0.5rem;
+	color:#37a7de
+}
+.text_content{
+	margin-top: 1rem
+}
+.text img{
+	width: 100%
+}
+/*拉取动态*/
+.ul_content .ul_content_div{
+	float: left;
+	list-style: none;
+	width: 3rem;
+	height: 1.8rem;
+	text-align: center;
+	line-height: 1.8rem;
+	font-size: 0.8rem;
+}
+.ul_content_1{
+	overflow: auto;
+}
+.ul_content{
+	background: white;
+	border-bottom: 0.1rem solid #eee
+}
+.ul_content_active_content .infoNameMyPage img{
+	width: 1.3rem;
+	height: 1.3rem;
+	border-radius: 1.3rem;
+	vertical-align: middle;
+}
+.ul_content_active_content p span{
+	margin-left: 0.4rem;
+	font-size: 0.75rem;
+	color: #8a8a8a;
+}
+.active_title{
+	margin:0.5rem 0.5rem;
+	font-size: 0.8rem;
+    color: black;
+}
+.ul_content_active_content>p{
+		margin:0.5rem;
+		width: 40%;
+}
+.active_article{
+	margin:0.5rem;
+	font-size: 0.7rem;
+	color: #8a8a8a;
+}
+.ul_content_active_content{
+	border-top: 0.2rem solid #eee;
+	margin-bottom: 0.3rem;
+	padding: 10px;
+}
+.active_img{
+	overflow: hidden;
+}
+.active_img img{
+	width: 100%
+}
+.good_people .good_people_span>img{
+	width: 1.1rem;
+	height: 1.1rem;
+	border-radius: 1.1rem;
+	display: block;
+	float: left;
+	margin-right: 0.1rem;
+	position: relative;
+	top: 2px
+}
+.good_people .good_people_span{
+	margin-left: 0.5rem;
+	display: inline-block;
+}
+.good{
+	margin-top: 0.5rem;
+}
+.good_people_span em{
+    display: inline-block;
+    padding: 0rem 0.4rem;
+    border:1px solid #ccc;
+    border-radius: 0.8rem;
+    font-size: 0.8rem;
+    color: #868484;
+    margin-left: 0.4rem;
+}
+.good_people_span em img{
+	width: 0.8rem;
+	position: relative;
+	top: 0.1rem;
+	margin-right: 0.1rem;
+	color: #ccc;
+}
+.good_people_right span{
+	display: inline-block;
+}
+.good_people_right span img{
+	width: 1rem;
+	vertical-align: middle;
+	margin-right: 0.2rem 
+}
+.good_people_right{
+	float: right;
+	margin-right: 0.5rem;
+    color: #868484;
+}
+.top_content{
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 4rem;
+	background: white;
+	z-index: 2;
+}
+.ul_content_active{
+    padding-top: 4.2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+.active_back{
+	height: 2.6rem;
+	background: linear-gradient(to bottom, #56d0ea , rgb(8, 148, 236));
+	text-align: right;
+	line-height: 2.6rem;
+}
+.active_back a{
+	color: white;
+    margin-right: 1rem
+}
+.appName{
+	color: white;
+	font-size: 1rem;
+	float: left;
+	margin-left: 1rem
+}
+.swiper-pagination-bullet{
+	background-color: #fff !important;
+}
