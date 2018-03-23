@@ -51,6 +51,12 @@
   background-color: #fff;
   box-shadow: 1px 1px 2px #333;
 }
+.article img {
+  width: 100%;
+  padding: 5px;
+  background-color: #fff;
+  box-shadow: 1px 1px 2px #333;
+}
 .bar >input{
   width: 50%;
   height: 35px;
